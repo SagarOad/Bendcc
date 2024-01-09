@@ -222,30 +222,33 @@ const EventForm = () => {
   };
 
   const handleChange = (e) => {
-    let value = e.target.value;
+    if (e.target.type === "file") {
+      const file = e.target.files[0];
+      setFormData((prevData) => ({
+        ...prevData,
+        [e.target.name]: file,
+      }));
+    } else {
+      let value = e.target.value;
 
-    // If the field should be an integer, convert the value to an integer
+      // If the field should be an integer, convert the value to an integer
+      if (
+        e.target.name === "event_tags" ||
+        e.target.name === "event_city" ||
+        e.target.name === "venue_detail" ||
+        e.target.name === "organizer_detail"
+      ) {
+        value = parseInt(value, 10);
+      }
 
-    if (
-      e.target.name === "event_tags" ||
-      e.target.name === "event_city" ||
-      e.target.name === "venue_detail" ||
-      e.target.name === "organizer_detail"
-    ) {
-      value = parseInt(value, 10);
+      // Update the corresponding field in the form data
+      setFormData((prevData) => ({
+        ...prevData,
+        [e.target.name]: value,
+      }));
     }
-
-    // Update the corresponding field in the form data
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: value,
-    }));
   };
-  
 
-
-  
   return (
     <div onSubmit={handleSubmit} className="event-form">
       <div className="container">
@@ -330,7 +333,6 @@ const EventForm = () => {
                     value={formData.venue_detail}
                     onChange={handleChange}
                   >
-           
                     <option value="1">Hall</option>
                     <option value="2">Banquet</option>
                     <option value="3">Home Event</option>
