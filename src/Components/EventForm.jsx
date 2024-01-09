@@ -242,7 +242,10 @@ const EventForm = () => {
       [e.target.name]: value,
     }));
   };
+  
 
+
+  
   return (
     <div onSubmit={handleSubmit} className="event-form">
       <div className="container">
@@ -252,7 +255,7 @@ const EventForm = () => {
             <div className="row mb-3">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="event-title">Event Title: ()</label>
+                  <label htmlFor="event-title">Event Title</label>
                   <input
                     type="text"
                     name="event_title"
@@ -290,14 +293,11 @@ const EventForm = () => {
                     onChange={handleChange}
                     className="form-control"
                   >
-                    <option disabled selected value="">
-                      Select
-                    </option>
-                    <option value="student">Student</option>
-                    <option value="job">Full Time Job</option>
-                    <option value="learner">Full Time Learner</option>
-                    <option value="preferNo">Prefer not to say</option>
-                    <option value="other">Other</option>
+                    <option value="1">Tag 1</option>
+                    <option value="2">Tag 2</option>
+                    <option value="3">Tag 3</option>
+                    <option value="4">Tag 4</option>
+                    <option value="5">Tag 5</option>
                   </select>
                 </div>
               </div>
@@ -309,15 +309,11 @@ const EventForm = () => {
                     name="event_status"
                     value={formData.event_status}
                     className="form-control"
+                    onChange={handleChange}
                   >
-                    <option disabled selected value="">
-                      Select
-                    </option>
-                    <option value="student">Student</option>
-                    <option value="job">Full Time Job</option>
-                    <option value="learner">Full Time Learner</option>
-                    <option value="preferNo">Prefer not to say</option>
-                    <option value="other">Other</option>
+                    <option value="1">Live</option>
+                    <option value="2">End</option>
+                    <option value="3">Postponed</option>
                   </select>
                 </div>
               </div>
@@ -334,14 +330,10 @@ const EventForm = () => {
                     value={formData.venue_detail}
                     onChange={handleChange}
                   >
-                    <option disabled selected value="">
-                      Select
-                    </option>
-                    <option value="student">Student</option>
-                    <option value="job">Full Time Job</option>
-                    <option value="learner">Full Time Learner</option>
-                    <option value="preferNo">Prefer not to say</option>
-                    <option value="other">Other</option>
+           
+                    <option value="1">Hall</option>
+                    <option value="2">Banquet</option>
+                    <option value="3">Home Event</option>
                   </select>
                 </div>
               </div>
@@ -356,14 +348,10 @@ const EventForm = () => {
                     value={formData.organizer_detail}
                     onChange={handleChange}
                   >
-                    <option disabled selected value="">
-                      Select
-                    </option>
-                    <option value="student">Student</option>
-                    <option value="job">Full Time Job</option>
-                    <option value="learner">Full Time Learner</option>
-                    <option value="preferNo">Prefer not to say</option>
-                    <option value="other">Other</option>
+                    <option value="1">Organizer 1</option>
+                    <option value="2">Organizer 2</option>
+                    <option value="3">Organizer 3</option>
+                    {/* Add more options as needed */}
                   </select>
                 </div>
               </div>
@@ -814,14 +802,15 @@ const EventForm = () => {
             <div className="row mb-3">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="eventImage">Event Image</label>
+                  <label htmlFor="event_image">Event Image</label>
                   <input
                     type="file"
-                    id="eventImage"
-                    name="eventImage"
+                    id="event_image"
+                    name="event_image"
+                    value={formData.event_image}
                     className="form-control"
                     accept="image/*"
-                    // onChange={handleEventImageChange} // You need to implement this function to handle the image change
+                    onChange={handleChange}
                   />
                   <small className="form-text text-muted">
                     Upload an image for your event.
