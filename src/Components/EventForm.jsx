@@ -6,6 +6,24 @@ import axios from "axios";
 
 const EventForm = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+
+  const [selectedStartDateOnce, setSelectedStartDateOnce] = useState(
+    new Date()
+  );
+  const [selectedEndDateOnce, setSelectedEndDateOnce] = useState(new Date());
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const options = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
   const [isRecurringEvent, setIsRecurringEvent] = useState(false);
@@ -37,9 +55,7 @@ const EventForm = () => {
     selectedStartDate.getDate()
   );
 
-  const handleEndDateChange = (date) => {
-    setSelectedEndDate(date);
-  };
+ 
 
   const handleAllDayEventChange = (e) => {
     setIsAllDayEvent(e.target.checked);
@@ -135,7 +151,7 @@ const EventForm = () => {
 
   const renderEventScheduleSummary = () => {
     if (!isRecurringEvent) {
-      return ""; // No summary for non-recurring events
+      return "";
     }
 
     const endsText =
@@ -182,15 +198,76 @@ const EventForm = () => {
     recurrence_end: "",
     event_image: "",
     event_description: "",
+
+    event_enddate: new Date(),
+    event_startdate: new Date(),
+
+    recurrence_startdate: new Date(),
+    recurrence_enddate: new Date(),
+
+    recurrence_days: [],
   });
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
     setFormData({
       ...formData,
-      event_date_time: date,
+      event_startdate: date,
+    }); 
+  };
+
+  const handleEndDateChange = (date) => {
+    setSelectedEndDate(date);
+    setFormData({
+      ...formData,
+      event_enddate: date,
+    }); 
+  };
+
+  
+
+
+  // testing
+
+  const handleStartDateChangeOnce = (date) => {
+    setSelectedStartDateOnce(date);
+    setFormData({
+      ...formData,
+      recurrence_startdate: date,
     });
   };
+
+
+
+  const handleEndDateChangeOnce = (date) => {
+    setSelectedEndDateOnce(date);
+    setFormData({
+      ...formData,
+      recurrence_enddate: date,
+    });
+  };
+
+  const handleCheckboxChange = (day) => {
+    setFormData((prevFormData) => {
+      const updatedDays = prevFormData.recurrence_days.includes(day)
+        ? prevFormData.recurrence_days.filter(
+            (selectedDay) => selectedDay !== day
+          )
+        : [...prevFormData.recurrence_days, day];
+
+      return {
+        ...prevFormData,
+        recurrence_days: updatedDays,
+      };
+    });
+  };
+
+  // const handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Use the selectedOptions array as needed, e.g., send it to the server, perform some action, etc.
+  //   console.log("Selected Options:", selectedOptions);
+  // };
+
   const [submitResponse, setSubmitResponse] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -514,7 +591,7 @@ const EventForm = () => {
                           onChange={handleRecurrenceTypeChange}
                           value={recurrenceType}
                         >
-                          <option value="daily">Daily</option>
+                          <option value="daily">Once</option>
                           <option value="weekly">Weekly</option>
                           <option value="monthly">Monthly</option>
                           <option value="yearly">Yearly</option>
@@ -524,44 +601,31 @@ const EventForm = () => {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label htmlFor="recurrenceEvery">Every</label>
-                              <select
-                                id="recurrenceEvery"
-                                name="recurrenceEvery"
+                              <label htmlFor="recurrenceEvery">
+                                Start Date
+                              </label>
+                              <DatePicker
+                                selected={selectedStartDateOnce}
+                                onChange={handleStartDateChangeOnce}
+                                dateFormat="MM/dd/yyyy h:mm aa"
+                                showTimeSelect
+                                timeFormat="h:mm aa"
                                 className="form-control"
-                                onChange={handleRecurrenceEveryChange}
-                                value={recurrenceEvery}
-                              >
-                                {[1, 2, 3, 4, 5, 6].map((num) => (
-                                  <option key={num} value={num}>
-                                    {num} days
-                                  </option>
-                                ))}
-                              </select>
+                              />
                             </div>
                           </div>
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label htmlFor="recurrenceEnds">Ends</label>
-                              <select
-                                id="recurrenceEnds"
-                                name="recurrenceEnds"
+                              <label htmlFor="recurrenceEvery">End Date</label>
+                              <br />
+                              <DatePicker
+                                selected={selectedEndDateOnce}
+                                onChange={handleEndDateChangeOnce}
+                                dateFormat="MM/dd/yyyy h:mm aa"
+                                showTimeSelect
+                                timeFormat="h:mm aa"
                                 className="form-control"
-                                onChange={handleRecurrenceEndsChange}
-                                value={recurrenceEnds}
-                              >
-                                <option value="on">On</option>
-                                <option value="after">After</option>
-                                <option value="never">Never</option>
-                              </select>
-                              {recurrenceEnds === "on" && (
-                                <DatePicker
-                                  selected={recurrenceEndDate}
-                                  onChange={handleRecurrenceEndDateChange}
-                                  dateFormat="MM/dd/yyyy"
-                                  className="form-control mt-2"
-                                />
-                              )}
+                              />
                             </div>
                           </div>
                         </div>
@@ -572,63 +636,54 @@ const EventForm = () => {
                           <div className="col-md-6">
                             <div className="form-group">
                               <label htmlFor="weeklyRecurrenceEvery">
-                                Every
+                                Start Date
                               </label>
-                              <select
-                                id="weeklyRecurrenceEvery"
-                                name="weeklyRecurrenceEvery"
+                              <DatePicker
+                                selected={selectedStartDateOnce}
+                                onChange={handleStartDateChangeOnce}
+                                dateFormat="MM/dd/yyyy"
+                                showTimeSelect={false}
+                                timeFormat="h:mm aa"
                                 className="form-control"
-                                onChange={handleWeeklyRecurrenceEveryChange}
-                                value={weeklyRecurrenceEvery}
-                              >
-                                {[1, 2, 3, 4, 5, 6].map((num) => (
-                                  <option key={num} value={num}>
-                                    {num} weeks
-                                  </option>
-                                ))}
-                              </select>
+                               
+                              />
                             </div>
                           </div>
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label htmlFor="daysOfWeek">Days of Week</label>
-                              <select
-                                id="daysOfWeek"
-                                name="daysOfWeek"
+                              <label htmlFor="daysOfWeek">End Date</label>
+                              <br />
+                              <DatePicker
+                                selected={selectedEndDateOnce}
+                                onChange={handleEndDateChangeOnce}
+                                dateFormat="MM/dd/yyyy"
+                                showTimeSelect={false}
+                                timeFormat="h:mm aa"
                                 className="form-control"
-                                onChange={handleDaysOfWeekChange}
-                                multiple
-                              >
-                                {[
-                                  "Sunday",
-                                  "Monday",
-                                  "Tuesday",
-                                  "Wednesday",
-                                  "Thursday",
-                                  "Friday",
-                                  "Saturday",
-                                ].map((day) => (
-                                  <option key={day} value={day}>
-                                    {day}
-                                  </option>
-                                ))}
-                              </select>
+                              />
                             </div>
                           </div>
                           <div className="col-md-6">
                             <div className="form-group">
                               <label htmlFor="weeklyRecurrenceEnds">Ends</label>
-                              <select
-                                id="weeklyRecurrenceEnds"
-                                name="weeklyRecurrenceEnds"
-                                className="form-control"
-                                onChange={handleWeeklyRecurrenceEndsChange}
-                                value={weeklyRecurrenceEnds}
-                              >
-                                <option value="on">On</option>
-                                <option value="after">After</option>
-                                <option value="never">Never</option>
-                              </select>
+                              <label>Select Options:</label>
+                     
+                              {options.map((option) => (
+                                <div key={option}>
+                                  <input
+                                    type="checkbox"
+                                    id={option}
+                                    value={option}
+                                    checked={formData.recurrence_days.includes(
+                                      option
+                                    )}
+                                    onChange={() =>
+                                      handleCheckboxChange(option)
+                                    }
+                                  />
+                                  <label htmlFor={option}>{option}</label>
+                                </div>
+                              ))}
                               {weeklyRecurrenceEnds === "on" && (
                                 <DatePicker
                                   selected={weeklyRecurrenceEndDate}

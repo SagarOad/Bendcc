@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import EventGridView from "../Components/EventGridView";
 import EventListView from "../Components/EventListView";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 
 const EventList = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API
+    fetch('https://famebusinesssolutions.com/bendcc/eventlist')
+      .then(response => response.json())
+      .then(data => setEvents(data.data.data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
   return (
     <div>
       <div class="tab-content" id="myTabContent">
@@ -15,7 +24,7 @@ const EventList = () => {
           aria-labelledby="home-tab"
           tabindex="0"
         >
-          <EventGridView />
+          <EventGridView events={events} />
         </div>
         <div
           class="tab-pane fade"

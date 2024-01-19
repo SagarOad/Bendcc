@@ -476,3 +476,68 @@ margin-bottom: 22px;
 .footer p {
   color: rgba(255, 255, 255, 0.376);
 }
+
+.border-0.px-0.mt-4 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+/* Event Page */
+
+
+.event-page-heading {
+  font-family: poppins;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.event-page-location {
+  font-family: poppins;
+  font-size: 16px;
+}
+
+.event-page-image {
+  width: 100%;
+}
+.event-page-para {
+  font-family: poppins;
+  font-size: 16px;
+  margin: 0px 22px 26px 0px;
+}
+
+.event-description {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+img.event-page-map {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+
+.event-page-details h2 {
+  font-size: 18px;
+  font-family: poppins;
+  margin-bottom: 20px;
+}
+.event-page-details h4 {
+  font-size: 16px;
+  font-family: poppins;
+}
+
+
+.event-page-details p {
+  font-size: 14px;
+  font-family: poppins;
+  font-weight: 500;
+  color: #0d6efd;
+}
+
+.event-page-details div {
+  margin-bottom: 18px;
+}
+
