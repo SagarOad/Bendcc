@@ -594,7 +594,7 @@ const EventForm = () => {
 
             <div className="row mb-3">
               <div className="col-md-6">
-                <div className="form-group">
+                {/* <div className="form-group">
                   <div className="form-check">
                     <input
                       type="checkbox"
@@ -879,7 +879,7 @@ const EventForm = () => {
                       )}
                     </>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
 

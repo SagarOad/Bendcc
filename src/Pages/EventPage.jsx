@@ -10,10 +10,11 @@ const EventPage = () => {
     // Fetch data from the API
     fetch('https://famebusinesssolutions.com/bendcc/eventdetail')
       .then(response => response.json())
-      .then(data => setEvents(data.data.data))
+      .then(data => setEvents(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  console.log(events)
   return (
     <div className=" container">
       <div className=" row">
