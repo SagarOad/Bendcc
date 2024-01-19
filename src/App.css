@@ -95,8 +95,18 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary {
   margin-bottom: -112px;
   z-index: 99;
 }
+
+
+nav.nav2.navbar.navbar-expand-lg.bg-body-tertiary {
+  background: black !important;
+  margin: 0 0 48px 0;
+}
 div#navbarNav {
   justify-content: end;
+}
+/* this needs to be changes its a footer style for event page */
+.container.event-main {
+  margin-bottom: 120px;
 }
 
 ul li a {

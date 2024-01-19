@@ -8,7 +8,7 @@ const EventCard = ({ event }) => {
     return (
     <div className="event-grid-card" key={event.event_id}>
       <div className="card">
-        <Link to={'/event'}>
+        <Link to={`/event?${event?.event_id}`}>
         <img
           src={`https://famebusinesssolutions.com/bendcc/public/events/${event.event_image}`}
           className="card-img-top event-img2"
