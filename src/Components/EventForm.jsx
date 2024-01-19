@@ -205,7 +205,7 @@ const EventForm = () => {
     recurrence_startdate: new Date(),
     recurrence_enddate: new Date(),
 
-    recurrence_days: [],
+    daydate: [],
   });
 
   const handleStartDateChange = (date) => {
@@ -249,15 +249,15 @@ const EventForm = () => {
 
   const handleCheckboxChange = (day) => {
     setFormData((prevFormData) => {
-      const updatedDays = prevFormData.recurrence_days.includes(day)
-        ? prevFormData.recurrence_days.filter(
+      const updatedDays = prevFormData.daydate.includes(day)
+        ? prevFormData.daydate.filter(
             (selectedDay) => selectedDay !== day
           )
-        : [...prevFormData.recurrence_days, day];
+        : [...prevFormData.daydate, day];
 
       return {
         ...prevFormData,
-        recurrence_days: updatedDays,
+        daydate: updatedDays,
       };
     });
   };
@@ -313,7 +313,8 @@ const EventForm = () => {
         e.target.name === "event_tags" ||
         e.target.name === "event_city" ||
         e.target.name === "venue_detail" ||
-        e.target.name === "organizer_detail"
+        e.target.name === "organizer_detail"||
+        e.target.name === "daydate"
       ) {
         value = parseInt(value, 10);
       }
@@ -657,7 +658,7 @@ const EventForm = () => {
                                 selected={selectedEndDateOnce}
                                 onChange={handleEndDateChangeOnce}
                                 dateFormat="MM/dd/yyyy"
-                                showTimeSelect={false}
+                                 showTimeSelect={false}
                                 timeFormat="h:mm aa"
                                 className="form-control"
                               />
@@ -674,7 +675,7 @@ const EventForm = () => {
                                     type="checkbox"
                                     id={option}
                                     value={option}
-                                    checked={formData.recurrence_days.includes(
+                                    checked={formData.daydate.includes(
                                       option
                                     )}
                                     onChange={() =>

@@ -1,17 +1,21 @@
 import React from "react";
 import { CiLocationOn } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const EventCard = ({ event }) => {
 
 
+  console.log(event);
     return (
     <div className="event-grid-card" key={event.event_id}>
       <div className="card">
+        <Link to={'/event'}>
         <img
           src={`https://famebusinesssolutions.com/bendcc/public/events/${event.event_image}`}
           className="card-img-top event-img2"
           alt="Event"
         />
+        </Link>
         <div className="card-body">
           <div className=" row">
             <div className="col-lg-2 event-day-container2">
