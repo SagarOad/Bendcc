@@ -5,6 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import axios from "axios";
 
 const EventForm = () => {
+
+  const [selectedDayIds, setSelectedDayIds] = useState([]);
+
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
   const [selectedStartDateOnce, setSelectedStartDateOnce] = useState(
@@ -23,6 +26,14 @@ const EventForm = () => {
     "Saturday",
     "Sunday",
   ];
+
+  const days = options.map((day, index) => ({
+    dayName: day,
+    dayId: index + 1, // Assuming dayId starts from 1, you can adjust as needed
+  }));
+
+
+  console.log(days);
 
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
@@ -205,7 +216,7 @@ const EventForm = () => {
     recurrence_startdate: new Date(),
     recurrence_enddate: new Date(),
 
-    daydate: [],
+    daydate: selectedDayIds,
   });
 
   const handleStartDateChange = (date) => {
@@ -260,6 +271,7 @@ const EventForm = () => {
         daydate: updatedDays,
       };
     });
+    
   };
 
   // const handleFormSubmit = (e) => {
@@ -326,6 +338,23 @@ const EventForm = () => {
       }));
     }
   };
+
+
+
+
+  const handleDaysCheckboxChange = (event) => {
+    const dayId = event.target.value;
+
+    setSelectedDayIds((prevSelectedDayIds) => {
+      if (prevSelectedDayIds.includes(dayId)) {
+        return prevSelectedDayIds.filter((selectedDayId) => selectedDayId !== dayId);
+      } else {
+        return [...prevSelectedDayIds, dayId];
+      }
+    });
+  };
+
+  console.log(selectedDayIds, "selected days")
 
   return (
     <div onSubmit={handleSubmit} className="event-form">
@@ -669,20 +698,17 @@ const EventForm = () => {
                               <label htmlFor="weeklyRecurrenceEnds">Ends</label>
                               <label>Select Options:</label>
                      
-                              {options.map((option) => (
-                                <div key={option}>
+                              {days?.map((item, index) => (
+                                <div key={item?.dayId}>
                                   <input
                                     type="checkbox"
-                                    id={option}
-                                    value={option}
-                                    checked={formData.daydate.includes(
-                                      option
-                                    )}
-                                    onChange={() =>
-                                      handleCheckboxChange(option)
-                                    }
+                                    id={item?.dayId}
+                                    key={item?.dayId}
+                                    value={item?.dayId}
+                                    checked={selectedDayIds.includes(item?.dayId)}
+                                    onChange={handleDaysCheckboxChange}
                                   />
-                                  <label htmlFor={option}>{option}</label>
+                                  <label htmlFor={item?.dayId}>{item?.dayName} </label>
                                 </div>
                               ))}
                               {weeklyRecurrenceEnds === "on" && (

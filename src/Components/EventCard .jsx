@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const EventCard = ({ event }) => {
 
 
-  console.log(event);
     return (
     <div className="event-grid-card" key={event.event_id}>
       <div className="card">
