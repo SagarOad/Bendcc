@@ -3,10 +3,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import axios from "axios";
+import Select from "react-select";
+import DaysData from "../DaysData";
 
 const EventForm = () => {
-
-  const [selectedDayIds, setSelectedDayIds] = useState([]);
+  // console.log(DaysData);
 
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
@@ -15,30 +16,16 @@ const EventForm = () => {
   );
   const [selectedEndDateOnce, setSelectedEndDateOnce] = useState(new Date());
 
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
 
-  const options = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  const days = options.map((day, index) => ({
-    dayName: day,
-    dayId: index + 1, // Assuming dayId starts from 1, you can adjust as needed
-  }));
-
-
-  console.log(days);
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedValues(selectedOptions);
+  };
 
   const [selectedEndDate, setSelectedEndDate] = useState(new Date());
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
   const [isRecurringEvent, setIsRecurringEvent] = useState(false);
-  const [recurrenceType, setRecurrenceType] = useState("daily");
+  const [eventType, setEventType] = useState("");
   const [recurrenceEvery, setRecurrenceEvery] = useState(1);
   const [recurrenceEnds, setRecurrenceEnds] = useState("on");
   const [recurrenceEndDate, setRecurrenceEndDate] = useState(new Date());
@@ -66,8 +53,6 @@ const EventForm = () => {
     selectedStartDate.getDate()
   );
 
- 
-
   const handleAllDayEventChange = (e) => {
     setIsAllDayEvent(e.target.checked);
     const isChecked = e.target.checked;
@@ -81,9 +66,7 @@ const EventForm = () => {
     setIsRecurringEvent(!isRecurringEvent);
   };
 
-  const handleRecurrenceTypeChange = (e) => {
-    setRecurrenceType(e.target.value);
-  };
+  
 
   const handleRecurrenceEveryChange = (e) => {
     setRecurrenceEvery(parseInt(e.target.value, 10));
@@ -200,31 +183,42 @@ const EventForm = () => {
     organizer_detail: 1,
     event_Website: "",
     event_cost: "",
-    event_date_time: new Date(),
+    // event_date_time: new Date(),
     is_event_allday: "",
     recurrence_event: "",
-    recurrence_type: "",
+    // recurrence_type: "",
+    event_type: "",
     recurrence_every: "",
     recurrence_in: "",
     recurrence_end: "",
     event_image: "",
     event_description: "",
 
-    event_enddate: new Date(),
     event_startdate: new Date(),
+    event_enddate: new Date(),
 
     recurrence_startdate: new Date(),
     recurrence_enddate: new Date(),
 
-    daydate: selectedDayIds,
+
+    formData: [],
   });
+
+
+  const handleEventTypeChange = (e) => {
+    setEventType(e.target.value);
+    setFormData({
+      ...formData,
+      event_type: e.target.value,
+    });
+  };
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
     setFormData({
       ...formData,
       event_startdate: date,
-    }); 
+    });
   };
 
   const handleEndDateChange = (date) => {
@@ -232,11 +226,8 @@ const EventForm = () => {
     setFormData({
       ...formData,
       event_enddate: date,
-    }); 
+    });
   };
-
-  
-
 
   // testing
 
@@ -247,8 +238,6 @@ const EventForm = () => {
       recurrence_startdate: date,
     });
   };
-
-
 
   const handleEndDateChangeOnce = (date) => {
     setSelectedEndDateOnce(date);
@@ -261,9 +250,7 @@ const EventForm = () => {
   const handleCheckboxChange = (day) => {
     setFormData((prevFormData) => {
       const updatedDays = prevFormData.daydate.includes(day)
-        ? prevFormData.daydate.filter(
-            (selectedDay) => selectedDay !== day
-          )
+        ? prevFormData.daydate.filter((selectedDay) => selectedDay !== day)
         : [...prevFormData.daydate, day];
 
       return {
@@ -271,14 +258,7 @@ const EventForm = () => {
         daydate: updatedDays,
       };
     });
-    
   };
-
-  // const handleFormSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Use the selectedOptions array as needed, e.g., send it to the server, perform some action, etc.
-  //   console.log("Selected Options:", selectedOptions);
-  // };
 
   const [submitResponse, setSubmitResponse] = useState(null);
 
@@ -286,10 +266,19 @@ const EventForm = () => {
     e.preventDefault();
 
     try {
+      // Extract integer values from selected options
+      const selectedDays = selectedValues.map((option) => option.value);
+
+      // Include selectedDays in the formData
+      const updatedFormData = {
+        ...formData,
+        daydate: selectedDays,
+      };
+      // https://famebusinesssolutions.com/bendcc/submitevent
       // Make a POST request to the API
       const response = await axios.post(
-        "https://famebusinesssolutions.com/bendcc/submitevent",
-        formData
+        "http://192.168.18.244:8888/submitevent",
+        updatedFormData
       );
 
       // Handle successful response
@@ -304,9 +293,6 @@ const EventForm = () => {
     } catch (error) {
       // Handle error
       console.error("Error:", error.response.data);
-
-      // Set the error response in state
-      setSubmitResponse(error.response.data);
     }
   };
 
@@ -324,8 +310,10 @@ const EventForm = () => {
       if (
         e.target.name === "event_tags" ||
         e.target.name === "event_city" ||
+        e.target.name === "event_type" ||
+        e.target.name === "event_status" ||
         e.target.name === "venue_detail" ||
-        e.target.name === "organizer_detail"||
+        e.target.name === "organizer_detail" ||
         e.target.name === "daydate"
       ) {
         value = parseInt(value, 10);
@@ -338,23 +326,6 @@ const EventForm = () => {
       }));
     }
   };
-
-
-
-
-  const handleDaysCheckboxChange = (event) => {
-    const dayId = event.target.value;
-
-    setSelectedDayIds((prevSelectedDayIds) => {
-      if (prevSelectedDayIds.includes(dayId)) {
-        return prevSelectedDayIds.filter((selectedDayId) => selectedDayId !== dayId);
-      } else {
-        return [...prevSelectedDayIds, dayId];
-      }
-    });
-  };
-
-  console.log(selectedDayIds, "selected days")
 
   return (
     <div onSubmit={handleSubmit} className="event-form">
@@ -594,7 +565,7 @@ const EventForm = () => {
 
             <div className="row mb-3">
               <div className="col-md-6">
-                {/* <div className="form-group">
+                <div className="form-group">
                   <div className="form-check">
                     <input
                       type="checkbox"
@@ -613,21 +584,21 @@ const EventForm = () => {
                   {isRecurringEvent && (
                     <>
                       <div className="form-group mt-2">
-                        <label htmlFor="recurrenceType">Recurrence Type</label>
+                        <label htmlFor="event_type">Recurrence Type</label>
                         <select
-                          id="recurrenceType"
-                          name="recurrenceType"
+                          id="event_type"
+                          name="event_type"
                           className="form-control"
-                          onChange={handleRecurrenceTypeChange}
-                          value={recurrenceType}
+                          onChange={handleEventTypeChange}
+                          value={eventType}
                         >
-                          <option value="daily">Once</option>
+                          <option value="daily">Daily</option>
                           <option value="weekly">Weekly</option>
                           <option value="monthly">Monthly</option>
                           <option value="yearly">Yearly</option>
                         </select>
                       </div>
-                      {recurrenceType === "daily" && (
+                      {eventType === "daily" && (
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
@@ -661,7 +632,7 @@ const EventForm = () => {
                         </div>
                       )}
 
-                      {recurrenceType === "weekly" && (
+                      {eventType === "weekly" && (
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
@@ -675,7 +646,6 @@ const EventForm = () => {
                                 showTimeSelect={false}
                                 timeFormat="h:mm aa"
                                 className="form-control"
-                               
                               />
                             </div>
                           </div>
@@ -687,7 +657,7 @@ const EventForm = () => {
                                 selected={selectedEndDateOnce}
                                 onChange={handleEndDateChangeOnce}
                                 dateFormat="MM/dd/yyyy"
-                                 showTimeSelect={false}
+                                showTimeSelect={false}
                                 timeFormat="h:mm aa"
                                 className="form-control"
                               />
@@ -695,35 +665,27 @@ const EventForm = () => {
                           </div>
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label htmlFor="weeklyRecurrenceEnds">Ends</label>
+                              <label htmlFor="weeklyRecurrenceEnds">
+                                Ends{" "}
+                              </label>
                               <label>Select Options:</label>
-                     
-                              {days?.map((item, index) => (
-                                <div key={item?.dayId}>
-                                  <input
-                                    type="checkbox"
-                                    id={item?.dayId}
-                                    key={item?.dayId}
-                                    value={item?.dayId}
-                                    checked={selectedDayIds.includes(item?.dayId)}
-                                    onChange={handleDaysCheckboxChange}
-                                  />
-                                  <label htmlFor={item?.dayId}>{item?.dayName} </label>
-                                </div>
-                              ))}
+
                               {weeklyRecurrenceEnds === "on" && (
-                                <DatePicker
-                                  selected={weeklyRecurrenceEndDate}
-                                  onChange={handleWeeklyRecurrenceEndDateChange}
-                                  dateFormat="MM/dd/yyyy"
-                                  className="form-control mt-2"
+                                <Select
+                                  defaultValue={[DaysData[0], DaysData[1]]}
+                                  isMulti
+                                  name="days"
+                                  options={DaysData}
+                                  className="basic-multi-select"
+                                  classNamePrefix="select"
+                                  onChange={handleSelectChange}
                                 />
                               )}
                             </div>
                           </div>
                         </div>
                       )}
-                      {recurrenceType === "monthly" && (
+                      {eventType === "monthly" && (
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
@@ -802,7 +764,7 @@ const EventForm = () => {
                           </div>
                         </div>
                       )}
-                      {recurrenceType === "yearly" && (
+                      {eventType === "yearly" && (
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group">
@@ -879,7 +841,7 @@ const EventForm = () => {
                       )}
                     </>
                   )}
-                </div> */}
+                </div>
               </div>
             </div>
 
