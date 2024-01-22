@@ -19,7 +19,7 @@ const Contact = () => {
           </div>
           <div className=" col-lg-8 ">
             <div className="map-container">
-                <img src={map} />
+                <img className=" w-100 " src={map} />
             </div>
           </div>
         </div>

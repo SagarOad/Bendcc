@@ -14,6 +14,7 @@ const EventCard = ({ event }) => {
           className="card-img-top event-img2"
           alt="Event"
         />
+        {console.log(event.event_image)}
         </Link>
         <div className="card-body">
           <div className=" row">

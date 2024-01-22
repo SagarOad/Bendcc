@@ -96,7 +96,6 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary {
   z-index: 99;
 }
 
-
 nav.nav2.navbar.navbar-expand-lg.bg-body-tertiary {
   background: black !important;
   margin: 0 0 48px 0;
@@ -178,19 +177,19 @@ input#\:r1\: {
 }
 
 .event-day-container {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   background-color: #f7a801;
-   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7a801;
+  color: white;
 }
 .event-day-container2 {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   background-color: #f7a801;
-   color: white;
-   margin: 0px 0px 12px -5px ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7a801;
+  color: white;
+  margin: 0px 0px 12px -5px;
 }
 
 .event-day {
@@ -304,7 +303,7 @@ input#\:r1\: {
 }
 
 .card-body .row {
- flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .pagination-btn {
@@ -332,8 +331,6 @@ input#\:r1\: {
   margin-left: 8px;
 }
 
-
-
 /* Submit event section */
 
 .submit-event-container {
@@ -354,17 +351,16 @@ input#\:r1\: {
   align-items: center;
 }
 
-
 .button-27 {
   appearance: none;
   background-color: #0d6efd;
   border: none;
   border-radius: 15px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family:"poppins";
+  font-family: "poppins";
   font-size: 18px;
   font-weight: 600;
   margin-top: 12px !important;
@@ -375,7 +371,7 @@ input#\:r1\: {
   padding: 18px 32px;
   text-align: center;
   text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -422,7 +418,7 @@ input#\:r1\: {
 .event-form select {
   height: 58px;
 }
-.event-form input[type=checkbox] {
+.event-form input[type="checkbox"] {
   height: 25px;
   width: 25px;
   margin-right: 12px;
@@ -441,7 +437,7 @@ input#\:r1\: {
 }
 
 .contact {
- align-items: center;
+  align-items: center;
 }
 
 .contact h2 {
@@ -465,10 +461,9 @@ input#\:r1\: {
   margin: 62px 12px 62px 12px;
 }
 
-
 .contact-img {
-width: 50%;
-margin-bottom: 22px;
+  width: 50%;
+  margin-bottom: 22px;
 }
 
 .contact-us {
@@ -492,10 +487,7 @@ margin-bottom: 22px;
   flex-wrap: wrap;
 }
 
-
-
 /* Event Page */
-
 
 .event-page-heading {
   font-family: poppins;
@@ -528,7 +520,6 @@ img.event-page-map {
   object-fit: cover;
 }
 
-
 .event-page-details h2 {
   font-size: 18px;
   font-family: poppins;
@@ -538,7 +529,6 @@ img.event-page-map {
   font-size: 16px;
   font-family: poppins;
 }
-
 
 .event-page-details p {
   font-size: 14px;
@@ -551,3 +541,39 @@ img.event-page-map {
   margin-bottom: 18px;
 }
 
+/* Media Queries */
+
+@media screen and (max-width: 991px) {
+  .card-body .row {
+    flex-wrap: wrap !important;
+  }
+
+  nav.navbar.navbar-expand-lg.bg-body-tertiary {
+    background: black !important;
+    color: white;
+  }
+
+  button.navbar-toggler.collapsed {
+    background-color: white;
+  }
+
+  button.navbar-toggler {
+    background: white;
+  }
+
+  ul.navbar-nav {
+    margin-top: 19px;
+    margin-bottom: 19px;
+  }
+
+  .slider-content h1 {
+    font-size: 56px;
+    line-height: 66px;
+  }
+
+  .justify-content-between {
+    justify-content: space-between!important;
+    margin-left: auto !important;
+    margin-right: auto;
+}
+}
