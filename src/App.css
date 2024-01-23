@@ -577,3 +577,11 @@ img.event-page-map {
     margin-right: auto;
 }
 }
+
+
+.success-message {
+  color: green;
+    margin: 39px 0px;
+    font-size: 31px;
+    font-weight: 600;
+}

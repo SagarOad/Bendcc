@@ -7,6 +7,10 @@ import Select from "react-select";
 import DaysData from "../DaysData";
 import MonthDatesData from "../MonthsData";
 import TargetMonths from "../TargerMonths";
+import EventCategoryData from "../EventCategoryData";
+import EventTagData from "../EventTagData";
+import VenueDetailData from "../VenueDetailsData";
+import OrganizerDetailsData from "../OrganizerDetailsData";
 
 const EventForm = () => {
   // console.log(DaysData);
@@ -36,11 +40,45 @@ const EventForm = () => {
     setSelectedTargetMonthValues(selectedOptions);
   };
 
+  const [selectedEventCategoryValues, setSelectedEventCategoryValues] =
+    useState([]);
+
+  const handleSelectedEventCategoryValues = (selectedOptions) => {
+    setSelectedEventCategoryValues(selectedOptions);
+  };
+
+
+  const [selectedEventTagValues, setSelectedEventTagValues] =
+    useState([]);
+
+  const handleSelectedEventTagValues = (selectedOptions) => {
+    setSelectedEventTagValues(selectedOptions);
+  };
+
+
+  const [selectedVenueDetailValues, setSelectedVenueDetailValues] =
+    useState([]);
+
+  const handleSelectedVenueDetailValues = (selectedOptions) => {
+    setSelectedVenueDetailValues(selectedOptions);
+  };
+  
+  const [selectedOrganizerDetailValues, setSelectedOrganizerDetailValues] =
+    useState([]);
+
+  const handleSelectedOrganizerDetailValues = (selectedOptions) => {
+    setSelectedOrganizerDetailValues(selectedOptions);
+  };
+
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
   const [isRecurringEvent, setIsRecurringEvent] = useState(false);
   const [eventType, setEventType] = useState("");
   const [weeklyRecurrenceEnds, setWeeklyRecurrenceEnds] = useState("on");
+
+  const [eventImage, setEventImage] = useState(null);
+
+  // console.log(eventImage, "event ki image");
 
   const handleAllDayEventChange = (e) => {
     setIsAllDayEvent(e.target.checked);
@@ -90,8 +128,7 @@ const EventForm = () => {
     recurrence_every: "",
     recurrence_in: "",
     recurrence_end: "",
-    event_image: "",
-    event_description: "",
+    event_image: eventImage,
 
     event_startdate: new Date(),
     event_enddate: new Date(),
@@ -144,20 +181,9 @@ const EventForm = () => {
     });
   };
 
-  const handleCheckboxChange = (day) => {
-    setFormData((prevFormData) => {
-      const updatedDays = prevFormData.daydate.includes(day)
-        ? prevFormData.daydate.filter((selectedDay) => selectedDay !== day)
-        : [...prevFormData.daydate, day];
-
-      return {
-        ...prevFormData,
-        daydate: updatedDays,
-      };
-    });
-  };
-
   const [submitResponse, setSubmitResponse] = useState(null);
+
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -166,10 +192,22 @@ const EventForm = () => {
       // Extract integer values from selected options
       const selectedDays = selectedValues.map((option) => option.value);
       const selectedMonthDays = selectedMonthValues.map(
-        (option) => option.value
+        (option) => option.label
       );
       const selectedTargetMonthDays = selectedTargetMonthValues.map(
-        (option) => option.value
+        (option) => option.label
+      );
+      const selectedEventCategories = selectedEventCategoryValues.map(
+        (option) => option.label
+      );
+      const selectedEventTags = selectedEventTagValues.map(
+        (option) => option.label
+      );
+      const selectedVenueDetail = selectedVenueDetailValues.map(
+        (option) => option.label
+      );
+      const selectedOrganizerDetail = selectedOrganizerDetailValues.map(
+        (option) => option.label
       );
 
       // Include selectedDays in the formData
@@ -178,6 +216,11 @@ const EventForm = () => {
         daydate: selectedDays,
         month_day: selectedMonthDays,
         targetmonth: selectedTargetMonthDays,
+        event_categories: selectedEventCategories,
+        event_tags: selectedEventTags,
+        venue_detail: selectedVenueDetail,
+        organizer_detail: selectedOrganizerDetail,
+        // event_image: eventImage,
       };
 
       // http://192.168.18.244:8888/submitevent
@@ -191,12 +234,36 @@ const EventForm = () => {
       // Handle successful response
       console.log("Response:", response.data);
 
+      setSubmitSuccess(true);
+
       // Reset form data if needed
       setFormData({
         event_title: "",
         event_description: "",
-        // Reset other form fields here
+        event_tags: 1,
+        event_status: "",
+        event_city: 1,
+        venue_detail: 1,
+        organizer_detail: 1,
+        event_Website: "",
+        event_cost: "",
+        is_event_allday: "",
+        recurrence_event: "",
+        event_type: "",
+        recurrence_every: "",
+        recurrence_in: "",
+        recurrence_end: "",
+        // event_image: "",
+        event_description: "",
+        event_startdate: new Date(),
+        event_enddate: new Date(),
+        recurrence_startdate: new Date(),
+        recurrence_enddate: new Date(),
+        formData: [], // Not sure if you really want to reset this field, as it might cause issues in your code.
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Reload after 2 seconds
     } catch (error) {
       // Handle error
       console.error("Error:", error.response.data);
@@ -205,23 +272,26 @@ const EventForm = () => {
 
   const handleChange = (e) => {
     if (e.target.type === "file") {
-    const file = e.target.files[0];
-    // console.log("Selected file:", file);
-    setFormData((prevData) => ({
-      ...prevData,
-      event_image: file,
-    }));
+      // const file = e.target.files[0];
+      // setEventImage(file)
+      // console.log(file);
+      // console.log("Selected file:", file);
+      // setFormData((prevData) => ({
+      //   ...prevData,
+      //   event_image: file,
+      // }));
+      // console.log(formData);
     } else {
       let value = e.target.value;
 
       // If the field should be an integer, convert the value to an integer
       if (
-        e.target.name === "event_tags" ||
+        // e.target.name === "event_tags" ||
         e.target.name === "event_city" ||
         e.target.name === "event_type" ||
-        e.target.name === "event_status" ||
-        e.target.name === "venue_detail" ||
-        e.target.name === "organizer_detail" ||
+        // e.target.name === "event_status" ||
+        // e.target.name === "venue_detail" ||
+        // e.target.name === "organizer_detail" ||
         e.target.name === "daydate"
       ) {
         value = parseInt(value, 10);
@@ -260,12 +330,21 @@ const EventForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="email">Event Categories</label>
-                  <input
+                  {/* <input
                     type="text"
                     name="eventCategories"
                     id="eventCategories"
                     placeholder="Enter event categories"
                     className="form-control"
+                  /> */}
+                  <Select
+                    defaultValue={[EventCategoryData[0], EventCategoryData[1]]}
+                    isMulti
+                    name="days"
+                    options={EventCategoryData}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleSelectedEventCategoryValues}
                   />
                 </div>
               </div>
@@ -275,23 +354,19 @@ const EventForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="event_tags">Event Tags</label>
-                  <select
-                    id="event_tags"
-                    name="event_tags"
-                    value={formData.event_tags}
-                    onChange={handleChange}
-                    className="form-control"
-                  >
-                    <option value="1">Tag 1</option>
-                    <option value="2">Tag 2</option>
-                    <option value="3">Tag 3</option>
-                    <option value="4">Tag 4</option>
-                    <option value="5">Tag 5</option>
-                  </select>
+                  <Select
+                    defaultValue={[EventTagData[0], EventTagData[1]]}
+                    isMulti
+                    name="days"
+                    options={EventTagData}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleSelectedEventTagValues}
+                  />
                 </div>
               </div>
               <div className="col-md-6">
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="event_status">Event Status</label>
                   <select
                     id="event_status"
@@ -304,7 +379,7 @@ const EventForm = () => {
                     <option value="2">End</option>
                     <option value="3">Postponed</option>
                   </select>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -312,35 +387,30 @@ const EventForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="venue_detail">Venue Details</label>
-                  <select
-                    id="venue_detail"
-                    name="venue_detail"
-                    className="form-control"
-                    value={formData.venue_detail}
-                    onChange={handleChange}
-                  >
-                    <option value="1">Hall</option>
-                    <option value="2">Banquet</option>
-                    <option value="3">Home Event</option>
-                  </select>
+                  <Select
+                    defaultValue={[VenueDetailData[0], VenueDetailData[1]]}
+                    isMulti
+                    name="days"
+                    options={VenueDetailData}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleSelectedVenueDetailValues}
+                  />
                 </div>
               </div>
 
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="organizer_detail">Organizer Details</label>
-                  <select
-                    id="organizer_detail"
-                    name="organizer_detail"
-                    className="form-control"
-                    value={formData.organizer_detail}
-                    onChange={handleChange}
-                  >
-                    <option value="1">Organizer 1</option>
-                    <option value="2">Organizer 2</option>
-                    <option value="3">Organizer 3</option>
-                    {/* Add more options as needed */}
-                  </select>
+                  <Select
+                    defaultValue={[OrganizerDetailsData[0], OrganizerDetailsData[1]]}
+                    isMulti
+                    name="days"
+                    options={OrganizerDetailsData}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleSelectedOrganizerDetailValues}
+                  />
                 </div>
               </div>
             </div>
@@ -540,7 +610,6 @@ const EventForm = () => {
                           </div>
                         </div>
                       )}
-
 
                       {eventType === "daily" && (
                         <div className="row">
@@ -775,8 +844,8 @@ const EventForm = () => {
                     id="event_image"
                     name="event_image"
                     className="form-control"
-                    accept="image/*"
-                    onChange={handleChange}
+                    // accept="image/*"
+                    onChange={(e) => setEventImage(e.target.files[0])}
                   />
                   {/* <input
                     type="file"
@@ -810,7 +879,14 @@ const EventForm = () => {
                 </div>
               </div>
             </div>
-
+            {submitSuccess && (
+              <div
+                className=" success-message"
+                style={{ color: "green", margin: "10px 0" }}
+              >
+                Event submitted successfully, Waiting for approval!
+              </div>
+            )}
             <div className="row">
               <div className="col-md-4">
                 <button

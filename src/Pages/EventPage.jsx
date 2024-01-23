@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import map from "../assets/map.png";
 import { useEffect, useState } from "react";
 import Navbar2 from "../Sections/Navbar2";
@@ -29,6 +30,13 @@ const EventPage = () => {
   console.log(events);
   return (
     <>
+    <Helmet>
+        <title>{events.event_title}</title>
+        <meta name="description" content={events.event_description} />
+        <meta property="og:title" content={events.event_title} />
+        <meta property="og:image" content={`${path}/${events?.event_image}`} />
+        {/* Add more meta tags as needed */}
+      </Helmet>
       <Navbar2 />
       <div className=" container event-main">
         <div className=" row">

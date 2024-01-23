@@ -4,46 +4,53 @@ import EventListView from "../Components/EventListView";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 
-const EventList = () => {
+const EventList = ({ searchQuery }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch('https://famebusinesssolutions.com/bendcc/eventlist')
-      .then(response => response.json())
-      .then(data => setEvents(data.data.data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+
+    const apiUrl = `https://famebusinesssolutions.com/bendcc/searchevent?event_title=${searchQuery}`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const eventsData = data?.data?.data || [];
+        console.log(eventsData);
+        setEvents(eventsData);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [searchQuery]);
+  console.log(searchQuery);
   return (
     <div>
-      <div class="tab-content" id="myTabContent">
+      <div className="tab-content" id="myTabContent">
         <div
-          class="tab-pane fade show active"
+          className="tab-pane fade show active"
           id="home-tab-pane"
           role="tabpanel"
           aria-labelledby="home-tab"
-          tabindex="0"
+          tabIndex="0"
         >
           <EventGridView events={events} />
         </div>
         <div
-          class="tab-pane fade"
+          className="tab-pane fade"
           id="profile-tab-pane"
           role="tabpanel"
           aria-labelledby="profile-tab"
-          tabindex="0"
+          tabIndex="0"
         >
-          <EventListView />
+          <EventListView events={events} />
         </div>
       </div>
-      <div className=" pagination-btn pt-4 ">
-        <button className=" border-0 p-0  bg-transparent  ">
-          <FaAngleLeft className="pagination-arrow-left " />
+      <div className="pagination-btn pt-4">
+        <button className="border-0 p-0 bg-transparent">
+          <FaAngleLeft className="pagination-arrow-left" />
           Previous Events
         </button>
-        <button className="border-0 p-0  bg-transparent ">
+        <button className="border-0 p-0 bg-transparent">
           Next Events
-          <FaAngleRight className="pagination-arrow-right " />
+          <FaAngleRight className="pagination-arrow-right" />
         </button>
       </div>
     </div>
