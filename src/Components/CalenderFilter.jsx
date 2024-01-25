@@ -4,9 +4,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CalendarFilter = ({ events }) => {
+const CalendarFilter = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [events, setEvents] = useState([]); // Define setEvents here
   const calendarRef = useRef(null);
 
   useEffect(() => {
@@ -18,45 +19,81 @@ const CalendarFilter = ({ events }) => {
 
   const handleYearChange = (date) => {
     setSelectedYear(date.getFullYear());
+    fetchData(selectedMonth, date.getFullYear());
   };
 
   const handleMonthChange = (month) => {
-    setSelectedMonth(month + 1);
+    setSelectedMonth(month);
+    fetchData(month, selectedYear);
+  };
+
+  const fetchData = async (month, year) => {
+    try {
+      const response = await fetch(
+        `https://famebusinesssolutions.com/bendcc/eventbymonthyear?event_month=${month}&event_year=${year}`
+      );
+      const data = await response.json();
+      
+      // Format the events data
+      const formattedEvents = data.events.map(event => ({
+        title: event.event_title,
+        date: event.event_startdate // Assuming event_startdate contains the date
+      }));
+  
+      setEvents(formattedEvents);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    console.log(selectedYear, selectedMonth)
   };
 
   return (
-    <div className="calendar-container">
-      <div className="filter-container">
-        <div className="year-picker">
-          <label>Year:</label>
-          <DatePicker
-            selected={new Date(selectedYear, 0, 1)}
-            onChange={handleYearChange}
-            dateFormat="yyyy"
-            showYearPicker
-            scrollableYearDropdown
-            yearDropdownItemNumber={30} // Increase the number of years displayed
-          />
+    <div>
+      <div className="calendar-container p-6 bg-white shadow-lg rounded-lg">
+        <div className="filter-container flex justify-between items-center mb-4">
+          <div className="year-picker mr-4">
+            <label className="mr-2">Year:</label>
+            <DatePicker
+              selected={new Date(selectedYear, 0, 1)}
+              onChange={handleYearChange}
+              dateFormat="yyyy"
+              showYearPicker
+              scrollableYearDropdown
+              yearDropdownItemNumber={30} // Increase the number of years displayed
+              className="border border-gray-300 px-2 py-1 rounded"
+            />
+          </div>
+          <div className="month-picker">
+            <label className="mr-2">Month:</label>
+            <select
+              value={selectedMonth}
+              onChange={(e) => handleMonthChange(parseInt(e.target.value))}
+              className="border border-gray-300 px-2 py-1 rounded"
+            >
+              {Array.from({ length: 12 }, (v, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {new Date(selectedYear, i, 1).toLocaleString("default", {
+                    month: "long",
+                  })}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="month-picker">
-          <label>Month:</label>
-          <select value={selectedMonth} onChange={(e) => handleMonthChange(parseInt(e.target.value))}>
-            {Array.from({ length: 12 }, (v, i) => (
-              <option key={i + 1} value={i + 1}>
-                {new Date(selectedYear, i, 1).toLocaleString('default', { month: 'long' })}
-              </option>
-            ))}
-          </select>
+        <div className="calendar">
+          <div>
+            <FullCalendar
+              className="calender"
+              ref={calendarRef}
+              plugins={[dayGridPlugin]}
+              initialView="dayGridMonth"
+              events={events}
+              initialDate={`${selectedYear}-${
+                selectedMonth < 10 ? "0" + selectedMonth : selectedMonth
+              }-01`}
+            />
+          </div>
         </div>
-      </div>
-      <div className="calendar">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          events={events}
-          initialDate={`${selectedYear}-${selectedMonth < 10 ? '0' + selectedMonth : selectedMonth}-01`}
-        />
       </div>
     </div>
   );

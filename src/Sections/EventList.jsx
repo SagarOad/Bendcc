@@ -3,12 +3,12 @@ import EventGridView from "../Components/EventGridView";
 import EventListView from "../Components/EventListView";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
+import CalenderFilter from "../Components/CalenderFilter";
 
 const EventList = ({ searchQuery }) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-
     const apiUrl = `https://famebusinesssolutions.com/bendcc/searchevent?event_title=${searchQuery}`;
 
     fetch(apiUrl)
@@ -22,7 +22,7 @@ const EventList = ({ searchQuery }) => {
   }, [searchQuery]);
   console.log(searchQuery);
   return (
-    <div>
+    <div className=" ">
       <div className="tab-content" id="myTabContent">
         <div
           className="tab-pane fade show active"
@@ -41,6 +41,17 @@ const EventList = ({ searchQuery }) => {
           tabIndex="0"
         >
           <EventListView events={events} />
+        </div>
+        <div
+          className="tab-pane fade"
+          id="month-tab-pane"
+          role="tabpanel"
+          aria-labelledby="month-tab"
+          tabIndex="0"
+        >
+          <div>
+            <CalenderFilter />
+          </div>
         </div>
       </div>
       <div className="pagination-btn pt-4">

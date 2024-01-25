@@ -35,13 +35,13 @@ const EventTabs = () => {
         <li class="nav-item" role="presentation">
           <button
             class="nav-link border-0"
-            id="profile-tab"
+            id="month-tab"
             data-bs-toggle="tab"
-            data-bs-target="#profile-tab-pane"
+            data-bs-target="#month-tab-pane"
             type="button"
             role="tab"
-            aria-controls="profile-tab-pane"
- 
+            aria-controls="month-tab-pane"
+            aria-selected="false"
           >
             Month
           </button>
@@ -49,15 +49,15 @@ const EventTabs = () => {
         <li class="nav-item" role="presentation">
           <button
             class="nav-link border-0"
-            id="profile-tab"
+            id="day-tab"
             data-bs-toggle="tab"
-            data-bs-target="#profile-tab-pane"
+            data-bs-target="#day-tab-pane"
             type="button"
             role="tab"
-            aria-controls="profile-tab-pane"
+            aria-controls="day-tab-pane"
             aria-selected="false"
           >
-            Days
+            Day
           </button>
         </li>
       </ul>

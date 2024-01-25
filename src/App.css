@@ -134,6 +134,7 @@ ul li a {
   padding: 140px 0px 140px 0px;
   background-color: #f6f6f7;
   margin: 80px 0px 80px 0px;
+  height: 100%;
 }
 
 .btn-primary {
@@ -572,16 +573,73 @@ img.event-page-map {
   }
 
   .justify-content-between {
-    justify-content: space-between!important;
+    justify-content: space-between !important;
     margin-left: auto !important;
     margin-right: auto;
+  }
 }
-}
-
 
 .success-message {
   color: green;
-    margin: 39px 0px;
-    font-size: 31px;
-    font-weight: 600;
+  margin: 39px 0px;
+  font-size: 31px;
+  font-weight: 600;
+}
+
+table.fc-scrollgrid.fc-scrollgrid-liquid {
+  height: 534px !important;
+  background: white;
+}
+
+.calendar-container.p-6.bg-white.shadow-lg.rounded-lg {
+  padding: 36px;
+  margin-top: 12px;
+  box-shadow: none !important;
+}
+
+
+.fc .fc-daygrid-day-number {
+  padding: 4px;
+  position: relative;
+  z-index: 4;
+  font-size: 18px;
+  font-family: poppins;
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+
+a.fc-col-header-cell-cushion {
+  color: black;
+  text-decoration: none;
+  font-family: poppins;
+}
+
+.fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+  height: 170px;
+  overflow-y: scroll;
+}
+
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
