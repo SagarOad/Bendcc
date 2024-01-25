@@ -366,7 +366,7 @@ const EventForm = () => {
                 </div>
               </div>
               <div className="col-md-6">
-                {/* <div className="form-group">
+                <div className="form-group">
                   <label htmlFor="event_status">Event Status</label>
                   <select
                     id="event_status"
@@ -375,11 +375,11 @@ const EventForm = () => {
                     className="form-control"
                     onChange={handleChange}
                   >
-                    <option value="1">Live</option>
-                    <option value="2">End</option>
+                    <option value="1">Scheduled</option>
+                    <option value="2">Canceled</option>
                     <option value="3">Postponed</option>
                   </select>
-                </div> */}
+                </div>
               </div>
             </div>
 

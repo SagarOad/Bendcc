@@ -32,6 +32,34 @@ const EventTabs = () => {
             Grid
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link border-0"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+ 
+          >
+            Month
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link border-0"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected="false"
+          >
+            Days
+          </button>
+        </li>
       </ul>
       
     </div>

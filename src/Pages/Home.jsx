@@ -7,6 +7,7 @@ import EventSubmission from "../Sections/EventSubmission";
 import Sponsors from "../Sections/Sponsors";
 import Contact from "../Sections/Contact";
 import Footer from "../Sections/Footer";
+import CalenderFilter from "../Components/CalenderFilter";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <Sponsors />
       <Contact />
       <Footer />
+      <CalenderFilter />
     </div>
   );
 };
