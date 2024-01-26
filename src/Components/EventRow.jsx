@@ -16,7 +16,7 @@ const EventRow = ({ event }) => {
       return (
         <img
           className="event-img"
-          src="https://lh3.googleusercontent.com/proxy/AcoD1Yiub73yxMG_8iOYRmRFifPgHxe2FORPI_K_J6RLX3flBDhsbaWgZrAa8zRCfK71TtUUBbnPlMc1y9Eci2CpozhMa5kPFdhG66vF4Gq2kJZfAw"
+          src="https://static.vecteezy.com/system/resources/thumbnails/022/059/000/small/no-image-available-icon-vector.jpg"
           alt="Default Event"
         />
       );

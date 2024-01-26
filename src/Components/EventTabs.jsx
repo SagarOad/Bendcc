@@ -1,6 +1,7 @@
 import React from "react";
 
 const EventTabs = () => {
+  
   return (
     <div>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -48,22 +49,7 @@ const EventTabs = () => {
             </button>
           </div>
         </li>
-        <li class="nav-item" role="presentation">
-          <div className="month-day-tabs">
-            <button
-              class="nav-link border-0"
-              id="day-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#day-tab-pane"
-              type="button"
-              role="tab"
-              aria-controls="day-tab-pane"
-              aria-selected="false"
-            >
-              Day
-            </button>
-          </div>
-        </li>
+       
       </ul>
     </div>
   );

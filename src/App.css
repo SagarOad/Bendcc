@@ -608,7 +608,6 @@ table.fc-scrollgrid.fc-scrollgrid-liquid {
   height: unset !important;
 }
 
-
 .fc .fc-daygrid-day-number {
   padding: 4px;
   position: relative;
@@ -631,10 +630,6 @@ a.fc-col-header-cell-cushion {
   overflow-y: scroll;
 }
 
-
-
-
-
 /* width */
 ::-webkit-scrollbar {
   width: 4px;
@@ -655,16 +650,11 @@ a.fc-col-header-cell-cushion {
   background: #555;
 }
 
-
-
 .contact-logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-
-
 
 /* Event submit button */
 
@@ -680,7 +670,7 @@ button.btn.button-27.btn-primary {
   transition: all 0.5s;
   cursor: pointer;
   margin: 36px;
-  box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+  box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.7);
 }
 button.btn.button-27.btn-primary {
   cursor: pointer;
@@ -690,22 +680,21 @@ button.btn.button-27.btn-primary {
 }
 
 button.btn.button-27.btn-primary:after {
-  content: '»';
+  content: "»";
   position: absolute;
-  opacity: 0;  
+  opacity: 0;
   top: 14px;
   right: -20px;
   transition: 0.5s;
 }
 button.btn.button-27.btn-primary:hover {
   padding-right: 24px;
-  padding-left:8px;
+  padding-left: 8px;
 }
 button.btn.button-27.btn-primary:hover:after {
   opacity: 1;
   right: 10px;
 }
-
 
 /* Search event button */
 
@@ -713,4 +702,31 @@ button.btn.button-27.btn-primary:hover:after {
   background-color: #0d6efd !important;
   color: white !important;
   font-weight: 600 !important;
+}
+
+.date-select-container {
+  margin: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.date-select-container button {
+  border: none;
+  background-color: white;
+  border: 1px solid rgb(200, 200, 200);
+  padding: 13px;
+}
+
+.date-select-container button svg {
+  font-size: 26px;
+  color: #9b9b9b;
+}
+
+.date-select-container .MuiFormControl-root.MuiTextField-root.css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  margin-left: 12px;
+}
+
+
+.MuiFormControl-root.MuiTextField-root.css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  margin: 12px;
 }
