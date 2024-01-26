@@ -94,10 +94,10 @@ const EventList = ({ searchQuery, selectedDate }) => {
           aria-labelledby="month-tab"
           tabIndex="0"
         >
-          
+         
         </div>
         <div>
-            <CalenderFilter />
+        {/* <CalenderFilter /> */}
           </div>
       </div>
       <div className="pagination-btn pt-4">
