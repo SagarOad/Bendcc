@@ -22,8 +22,15 @@ const Navbar = () => {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
+                <buttton
+                  type="button"
+                  className="nav-link"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalFullscreen">
+                     Submit an Event
+                </buttton>
                 <a class="nav-link active" aria-current="page" href="#">
-                  Submit an Event
+                  
                 </a>
               </li>
             </ul>

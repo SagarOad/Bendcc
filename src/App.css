@@ -105,7 +105,7 @@ div#navbarNav {
 }
 /* this needs to be changes its a footer style for event page */
 .container.event-main {
-  margin-bottom: 120px;
+  margin-bottom: 346px;
 }
 
 ul li a {
@@ -744,4 +744,11 @@ button#profile-tab {
 }
 button#month-tab {
     font-size: 22px;
+}
+
+
+buttton.nav-link {
+  color: white !important;
+  font-size: 21px;
+  font-family: poppins;
 }

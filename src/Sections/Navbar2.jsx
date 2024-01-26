@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 const Navbar2 = () => {
   return (
@@ -22,9 +24,15 @@ const Navbar2 = () => {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  Submit an Event
-                </a>
+                <Link to="/" className=" d-flex text-decoration-none  ">
+              <buttton
+                  type="button"
+                  className="nav-link"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModalFullscreen">
+                     Home
+                </buttton>
+                </Link>
               </li>
          
             </ul>
