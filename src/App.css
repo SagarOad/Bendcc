@@ -730,3 +730,18 @@ button.btn.button-27.btn-primary:hover:after {
 .MuiFormControl-root.MuiTextField-root.css-z3c6am-MuiFormControl-root-MuiTextField-root {
   margin: 12px;
 }
+
+
+.event-tabs-wrapper {
+  display: none;
+}
+
+button#home-tab {
+    font-size: 22px;
+}
+button#profile-tab {
+    font-size: 22px;
+}
+button#month-tab {
+    font-size: 22px;
+}

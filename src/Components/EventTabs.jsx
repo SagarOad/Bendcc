@@ -1,13 +1,17 @@
+// EventTabs.js
 import React from "react";
 
-const EventTabs = () => {
-  
+const EventTabs = ({ onTabChange }) => {
+  const handleTabClick = (tabName) => {
+    onTabChange(tabName); // Notify parent component of tab change
+  };
+
   return (
     <div>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
+      <ul className="nav nav-tabs" id="myTab" role="tablist">
+        <li className="nav-item" role="presentation">
           <button
-            class="nav-link border-0  active"
+            className="nav-link border-0  active"
             id="home-tab"
             data-bs-toggle="tab"
             data-bs-target="#home-tab-pane"
@@ -15,13 +19,14 @@ const EventTabs = () => {
             role="tab"
             aria-controls="home-tab-pane"
             aria-selected="true"
+            onClick={() => handleTabClick("List")} // Notify parent on click
           >
             List
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li className="nav-item" role="presentation">
           <button
-            class="nav-link border-0"
+            className="nav-link border-0"
             id="profile-tab"
             data-bs-toggle="tab"
             data-bs-target="#profile-tab-pane"
@@ -29,14 +34,15 @@ const EventTabs = () => {
             role="tab"
             aria-controls="profile-tab-pane"
             aria-selected="false"
+            onClick={() => handleTabClick("Grid")} // Notify parent on click
           >
             Grid
           </button>
         </li>
-        <li class="nav-item" role="presentation">
+        <li className="nav-item" role="presentation">
           <div className="month-day-tabs">
             <button
-              class="nav-link border-0"
+              className="nav-link border-0"
               id="month-tab"
               data-bs-toggle="tab"
               data-bs-target="#month-tab-pane"
@@ -44,12 +50,12 @@ const EventTabs = () => {
               role="tab"
               aria-controls="month-tab-pane"
               aria-selected="false"
+              onClick={() => handleTabClick("Month")} // Notify parent on click
             >
               Month
             </button>
           </div>
         </li>
-       
       </ul>
     </div>
   );
