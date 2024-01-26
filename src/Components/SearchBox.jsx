@@ -22,7 +22,7 @@ const SearchBox = ({ onSearch }) => {
         />
         <button
           type="button"
-          className="btn btn m-2"
+          className="btn search-btn btn m-2"
           data-mdb-ripple-init
           onClick={handleSearch}
         >

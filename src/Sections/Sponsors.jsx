@@ -16,16 +16,26 @@ const Sponsors = () => {
         <div className="container sponsors-img-container ">
           <div className=" row sponsors-img">
             <div className=" col-lg-3">
-              <img src="https://www.bendcc.com/wp-content/uploads/2023/09/363895279_264511683005464_3428500827416285857_n-640x640.jpg" />
+              <div>
+                <a target="_blank" href="https://www.instagram.com/sullinsshoots/">
+                  <img src="https://www.bendcc.com/wp-content/uploads/2023/09/363895279_264511683005464_3428500827416285857_n-640x640.jpg" />
+                </a>
+              </div>
             </div>
             <div className=" col-lg-3">
-              <img src="https://www.bendcc.com/wp-content/uploads/2022/08/blog9-scaled-1-640x640.jpeg" />
+              <div>
+                <img src="https://www.bendcc.com/wp-content/uploads/2022/08/blog9-scaled-1-640x640.jpeg" />
+              </div>
             </div>
             <div className=" col-lg-3">
-              <img src="https://www.bendcc.com/wp-content/uploads/2022/08/blog5-scaled-1-640x640.jpeg" />
+              <div>
+                <img src="https://www.bendcc.com/wp-content/uploads/2022/08/blog5-scaled-1-640x640.jpeg" />
+              </div>
             </div>
             <div className=" col-lg-3">
-              <img src="https://www.bendcc.com/wp-content/uploads/2023/09/bend-custom-high-resolution-logo-black-on-transparent-background-640x640.png" />
+              <div>
+                <img src="https://www.bendcc.com/wp-content/uploads/2023/09/bend-custom-high-resolution-logo-black-on-transparent-background-640x640.png" />
+              </div>
             </div>
           </div>
         </div>

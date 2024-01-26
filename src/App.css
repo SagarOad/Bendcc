@@ -438,7 +438,9 @@ input#\:r1\: {
 }
 
 .contact {
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .contact h2 {
@@ -463,8 +465,8 @@ input#\:r1\: {
 }
 
 .contact-img {
-  width: 50%;
-  margin-bottom: 22px;
+  width: 225px;
+  margin-right: 22px;
 }
 
 .contact-us {
@@ -595,6 +597,15 @@ table.fc-scrollgrid.fc-scrollgrid-liquid {
   padding: 36px;
   margin-top: 12px;
   box-shadow: none !important;
+  height: 800;
+}
+
+.fc .fc-view-harness-active > .fc-view {
+  position: unset !important;
+}
+
+.fc .fc-view-harness {
+  height: unset !important;
 }
 
 
@@ -642,4 +653,64 @@ a.fc-col-header-cell-cushion {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+
+
+.contact-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+/* Event submit button */
+
+button.btn.button-27.btn-primary {
+  border-radius: 4px;
+  background-color: #5ca1e1;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 23px;
+  padding: 16px;
+  width: 220px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 36px;
+  box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+}
+button.btn.button-27.btn-primary {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button.btn.button-27.btn-primary:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;  
+  top: 14px;
+  right: -20px;
+  transition: 0.5s;
+}
+button.btn.button-27.btn-primary:hover {
+  padding-right: 24px;
+  padding-left:8px;
+}
+button.btn.button-27.btn-primary:hover:after {
+  opacity: 1;
+  right: 10px;
+}
+
+
+/* Search event button */
+
+.search-btn {
+  background-color: #0d6efd !important;
+  color: white !important;
+  font-weight: 600 !important;
 }

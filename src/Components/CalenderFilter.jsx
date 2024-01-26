@@ -48,7 +48,7 @@ const CalendarFilter = () => {
   };
 
   return (
-    <div>
+
       <div className="calendar-container p-6 bg-white shadow-lg rounded-lg">
         <div className="filter-container flex justify-between items-center mb-4">
           <div className="year-picker mr-4">
@@ -80,10 +80,10 @@ const CalendarFilter = () => {
             </select>
           </div>
         </div>
-        <div className="calendar">
+        <div className="calendar newCalenderStyle">
           <div>
             <FullCalendar
-              className="calender"
+              className="calender "
               ref={calendarRef}
               plugins={[dayGridPlugin]}
               initialView="dayGridMonth"
@@ -95,7 +95,6 @@ const CalendarFilter = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -20,7 +20,7 @@ const Home = () => {
       <Sponsors />
       <Contact />
       <Footer />
-      <CalenderFilter />
+      {/* <CalenderFilter /> */}
     </div>
   );
 };

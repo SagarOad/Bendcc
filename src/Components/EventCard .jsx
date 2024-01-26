@@ -1,19 +1,27 @@
 import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { Link } from "react-router-dom";
+// import defaultImage from "./default-event-image.jpg"; // Import your default stock image
 
 const EventCard = ({ event }) => {
-  // console.log(event);
-
   return (
     <div className="event-grid-card" key={event.event_id}>
       <div className="card">
         <Link to={`/event?${event?.event_id}`}>
-          <img
-            src={`https://famebusinesssolutions.com/bendcc/public/events/${event.event_image}`}
-            className="card-img-top event-img2"
-            alt="Event"
-          />
+          {/* Use conditional rendering for event image */}
+          {event.event_image ? (
+            <img
+              src={`https://famebusinesssolutions.com/bendcc/public/events/${event.event_image}`}
+              className="card-img-top event-img2"
+              alt="Event"
+            />
+          ) : (
+            <img
+              src="https://lh3.googleusercontent.com/proxy/AcoD1Yiub73yxMG_8iOYRmRFifPgHxe2FORPI_K_J6RLX3flBDhsbaWgZrAa8zRCfK71TtUUBbnPlMc1y9Eci2CpozhMa5kPFdhG66vF4Gq2kJZfAw"
+              className="card-img-top event-img2"
+              alt="Default Event"
+            />
+          )}
         </Link>
         <div className="card-body">
           <div className=" row">

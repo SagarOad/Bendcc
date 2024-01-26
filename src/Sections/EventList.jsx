@@ -5,22 +5,55 @@ import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 import CalenderFilter from "../Components/CalenderFilter";
 
-const EventList = ({ searchQuery }) => {
+const EventList = ({ searchQuery, selectedDate }) => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `https://famebusinesssolutions.com/bendcc/searchevent?event_title=${searchQuery}`;
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
 
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        const eventsData = data?.data?.data || [];
+      try {
+        let apiUrl = `https://famebusinesssolutions.com/bendcc/searchevent?event_title=${searchQuery}`;
+
+        // Append selected date to API URL if available
+        if (selectedDate) {
+          const formattedDate = selectedDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+          apiUrl = `https://famebusinesssolutions.com/bendcc/eventbydate?event_date=${formattedDate}`;
+        }
+
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
+        }
+
+        const data = await response.json();
+        const eventsData = data?.data?.data || data?.events || [];
         console.log(eventsData);
-        setEvents(eventsData);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [searchQuery]);
+
+        setEvents(eventsData.length > 0 ? eventsData : [{ id: 1, title: "Default Event" }]);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery, selectedDate]);
+
   console.log(searchQuery);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className=" ">
       <div className="tab-content" id="myTabContent">

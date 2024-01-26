@@ -33,35 +33,38 @@ const EventTabs = () => {
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link border-0"
-            id="month-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#month-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="month-tab-pane"
-            aria-selected="false"
-          >
-            Month
-          </button>
+          <div className="month-day-tabs">
+            <button
+              class="nav-link border-0"
+              id="month-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#month-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="month-tab-pane"
+              aria-selected="false"
+            >
+              Month
+            </button>
+          </div>
         </li>
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link border-0"
-            id="day-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#day-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="day-tab-pane"
-            aria-selected="false"
-          >
-            Day
-          </button>
+          <div className="month-day-tabs">
+            <button
+              class="nav-link border-0"
+              id="day-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#day-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="day-tab-pane"
+              aria-selected="false"
+            >
+              Day
+            </button>
+          </div>
         </li>
       </ul>
-      
     </div>
   );
 };

@@ -11,7 +11,7 @@ const EventSubmitModal = () => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModalFullscreen"
         >
-          Submit an Event
+          <span>Submit an Event!</span>
         </button>
         <div
           className="modal fade"
