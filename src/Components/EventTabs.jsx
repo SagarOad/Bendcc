@@ -11,7 +11,7 @@ const EventTabs = ({ onTabChange }) => {
       <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-            className="nav-link border-0  active"
+            className="nav-link border-0 active"
             id="home-tab"
             data-bs-toggle="tab"
             data-bs-target="#home-tab-pane"

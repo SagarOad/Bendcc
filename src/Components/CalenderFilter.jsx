@@ -5,8 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CalendarFilter = () => {
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+
+
+  const [selectedYear, setSelectedYear] = useState(year);
+  const [selectedMonth, setSelectedMonth] = useState(month);
   const [events, setEvents] = useState([]); // Define setEvents here
   const calendarRef = useRef(null);
 
@@ -15,22 +19,26 @@ const CalendarFilter = () => {
       const newDate = new Date(selectedYear, selectedMonth - 1);
       calendarRef.current.getApi().gotoDate(newDate);
     }
+    fetchData(selectedMonth, selectedMonth)
+
   }, [selectedYear, selectedMonth]);
 
   const handleYearChange = (date) => {
+  
     setSelectedYear(date.getFullYear());
     fetchData(selectedMonth, date.getFullYear());
   };
 
   const handleMonthChange = (month) => {
     setSelectedMonth(month);
-    fetchData(month, selectedYear);
+    fetchData(month);
   };
 
-  const fetchData = async (month, year) => {
+  const fetchData = async (month) => {
+
     try {
       const response = await fetch(
-        `https://famebusinesssolutions.com/bendcc/eventbymonthyear?event_month=${month}&event_year=${year}`
+        `https://famebusinesssolutions.com/bendcc/eventbymonthyear?event_month=${month}&event_year=${selectedYear}`
       );
       const data = await response.json();
       
@@ -54,6 +62,7 @@ const CalendarFilter = () => {
           <div className="year-picker mr-4">
             <label className="mr-2">Year:</label>
             <DatePicker
+              // selected={new Date(selectedYear, 0, 1)}
               selected={new Date(selectedYear, 0, 1)}
               onChange={handleYearChange}
               dateFormat="yyyy"
