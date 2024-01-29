@@ -752,3 +752,15 @@ buttton.nav-link {
   font-size: 21px;
   font-family: poppins;
 }
+
+
+
+img.rounded-3.calender-icon {
+  width: 31px;
+  margin-right: 16px;
+}
+
+button.btn.calender-btn.search-btn.btn.m-2 {
+  padding: 15px;
+  margin-top: 12px;
+}
