@@ -9,4 +9,7 @@ export default defineConfig({
     jsxFactory: 'React.createElement',
     jsxFragment: 'React.Fragment',
   },
+  server: {
+    host: '192.168.18.250', // Update this with your local IP address
+  },
 })

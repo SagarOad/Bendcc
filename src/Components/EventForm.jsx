@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import axios from "axios";
 import Select from "react-select";
 import DaysData from "../DaysData";
+import CityData from "../CityData";
 import MonthDatesData from "../MonthsData";
 import TargetMonths from "../TargerMonths";
 import EventCategoryData from "../EventCategoryData";
@@ -47,22 +48,20 @@ const EventForm = () => {
     setSelectedEventCategoryValues(selectedOptions);
   };
 
-
-  const [selectedEventTagValues, setSelectedEventTagValues] =
-    useState([]);
+  const [selectedEventTagValues, setSelectedEventTagValues] = useState([]);
 
   const handleSelectedEventTagValues = (selectedOptions) => {
     setSelectedEventTagValues(selectedOptions);
   };
 
-
-  const [selectedVenueDetailValues, setSelectedVenueDetailValues] =
-    useState([]);
+  const [selectedVenueDetailValues, setSelectedVenueDetailValues] = useState(
+    []
+  );
 
   const handleSelectedVenueDetailValues = (selectedOptions) => {
     setSelectedVenueDetailValues(selectedOptions);
   };
-  
+
   const [selectedOrganizerDetailValues, setSelectedOrganizerDetailValues] =
     useState([]);
 
@@ -115,7 +114,7 @@ const EventForm = () => {
     event_description: "",
     event_tags: 1,
     event_status: "",
-    event_city: 1,
+    event_city: "",
     venue_detail: 1,
     organizer_detail: 1,
     event_Website: "",
@@ -242,7 +241,7 @@ const EventForm = () => {
         event_description: "",
         event_tags: 1,
         event_status: "",
-        event_city: 1,
+        event_city: "",
         venue_detail: 1,
         organizer_detail: 1,
         event_Website: "",
@@ -262,7 +261,7 @@ const EventForm = () => {
         formData: [], // Not sure if you really want to reset this field, as it might cause issues in your code.
       });
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 2000); // Reload after 2 seconds
     } catch (error) {
       // Handle error
@@ -287,7 +286,7 @@ const EventForm = () => {
       // If the field should be an integer, convert the value to an integer
       if (
         // e.target.name === "event_tags" ||
-        e.target.name === "event_city" ||
+        // e.target.name === "event_city" ||
         e.target.name === "event_type" ||
         // e.target.name === "event_status" ||
         // e.target.name === "venue_detail" ||
@@ -403,7 +402,10 @@ const EventForm = () => {
                 <div className="form-group">
                   <label htmlFor="organizer_detail">Organizer Details</label>
                   <Select
-                    defaultValue={[OrganizerDetailsData[0], OrganizerDetailsData[1]]}
+                    defaultValue={[
+                      OrganizerDetailsData[0],
+                      OrganizerDetailsData[1],
+                    ]}
                     isMulti
                     name="days"
                     options={OrganizerDetailsData}
@@ -492,18 +494,28 @@ const EventForm = () => {
             <div className="row mb-3">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="city">Select Cities</label>
-                  <input
-                    type="text"
-                    id="city"
+                  <label htmlFor="event_city">Event City</label>
+                  {/* <select
+                    id="event_city"
+                    name="event_city"
+                    value={formData.event_city}
                     className="form-control"
-                    placeholder="Enter city"
-                    value={newCity}
-                    onChange={(e) => setNewCity(e.target.value)}
+                    onChange={handleChange}
+                  >
+                    {CityData.map((city, index) => (
+                      <option key={index} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select> */}
+                  <Select
+                    defaultValue={CityData[0]} // Set default selected option
+                    name="city"
+                    options={CityData} // Provide options from CityData array
+                    className="basic-select"
+                    classNamePrefix="select"
+                    // onChange={this.handleSelectChange} // Handle change event
                   />
-                  <small className="form-text text-muted">
-                    Type a city name and press "Add" to select.
-                  </small>
                 </div>
               </div>
               <div className="col-md-6">
