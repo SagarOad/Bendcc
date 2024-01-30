@@ -4,6 +4,8 @@ import map from "../assets/map.png";
 import { useEffect, useState } from "react";
 import Navbar2 from "../Sections/Navbar2";
 import Footer from "../Sections/Footer";
+import outlookImg from "../assets/outlookImg.png";
+import googleCalender from "../assets/google-calender.png";
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
@@ -47,6 +49,27 @@ const EventPage = () => {
     return formattedDateTime;
   }
 
+
+  function formatDateToOutlookCalendarFormat(dateString) {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+
+    // Extract date components
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+
+    // Format the date and time components
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+
+    return formattedDateTime;
+}
+
+
+
   const constructGoogleCalendarLink = () => {
     const googleCalendarLink =
       "https://www.google.com/calendar/render?action=TEMPLATE" +
@@ -58,6 +81,50 @@ const EventPage = () => {
 
     window.open(googleCalendarLink, "_blank");
   };
+
+  const constructOutlookCalendarLink = () => {
+    // Format start and end dates using the new function for Outlook Calendar
+    const formattedStartDate = formatDateToOutlookCalendarFormat(events.event_startdate + " " + events.event_starttime);
+    const formattedEndDate = formatDateToOutlookCalendarFormat(events.event_enddate + " " + events.event_endtime);
+
+    // Construct the Outlook Calendar link
+    const outlook365Link =
+        "https://outlook.office.com/calendar/action/compose?subject=" +
+        encodeURIComponent(events.event_title) +
+        "&body=" +
+        encodeURIComponent(events.event_description) +
+        "&startdt=" +
+        encodeURIComponent(formattedStartDate) +
+        "&enddt=" +
+        encodeURIComponent(formattedEndDate);
+
+    // Open the Outlook Calendar link in a new window
+    window.open(outlook365Link, "_blank");
+};
+ 
+const constructOutlookLiveCalendarLink = () => {
+  // Format start and end dates using the new function for Outlook Calendar
+  const formattedStartDate = formatDateToOutlookCalendarFormat(events.event_startdate + " " + events.event_starttime);
+  const formattedEndDate = formatDateToOutlookCalendarFormat(events.event_enddate + " " + events.event_endtime);
+
+  // Construct the Outlook Live Calendar link
+  const outlookLiveLink =
+      "https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addevent" +
+      "&subject=" +
+      encodeURIComponent(events.event_title) +
+      "&body=" +
+      encodeURIComponent(events.event_description) +
+      "&startdt=" +
+      encodeURIComponent(formattedStartDate) +
+      "&enddt=" +
+      encodeURIComponent(formattedEndDate);
+
+  // Open the Outlook Live Calendar link in a new window
+  window.open(outlookLiveLink, "_blank");
+};
+
+  
+  
 
   const startDateFormatted = new Date(
     `${events.event_startdate} ${events.event_starttime}`
@@ -167,10 +234,35 @@ const EventPage = () => {
           <span>
             <img
               className="rounded-3 calender-icon "
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAApVBMVEVChfT////7vAQ0qFMZZ9IYgDgufPPc5vzqQzX+8dj7uADb7d48gvQZokNvnfY/gu4AYdnWrFc9hdUUgCEzoVH73t34qRttl1DpODfyOjPpLBZck/UmefPy9v6qw/lDetegt+gAXdDq8P1Cj1WgwacAeSa/0vrb2t7VqEqbufiFq/eNsPeyyfnS3/xNi/QPcvMuftS+2N3h37/5pABikUXxLTTwHxJDjFneAAABaklEQVRIie3WyW6DMBCA4ZmWDl2m7pousSE7LQRI9/d/tJoEiJMDGnOK1P6XCKRPNuMQBRBjDaKugqbRGBFQk8w5MJiMEGKpc2EwGYNwn3swGInZHgz+4QFD6uzabdclYUcvrzdOuzDEjs7Oj5z+LCzSbJlHrYiKUAaVYWaivHYFGy2CiphKIDDJ2qUGWElgsmJtt5kQlPZqqomFEAs9rT4yNtbb1VUphHXLNUxWMUpXrEcJXG0V7S0PWCQxsCnqKw9YVhNpl/eBhpg3M/KDURSmdlF/WJUTxb2gPULlBQulN9v1har+ei+ZUy8YGqAsyRUBRX7PmJjqpWKu3w5Elg4nVIYMqeYYUetMPNWwVdsO8sdKBNnJ+MBbp7f3i44+Ph+c4M7tsquv76e24QBO3O6PO3p8Pm0aDrAXtK4XrFwfuHY94Mb5w9p5w8b5wtYhzHzg1iHMF3LoOPtnfraQwh/HWYjzmRC6Dn8Bmsg2n9DYt2kAAAAASUVORK5CYII="
+              src={googleCalender}
             />
           </span>
           Add to Google Calendar
+        </button>
+
+        <button
+          className="btn calender-btn search-btn btn m-2"
+          onClick={constructOutlookCalendarLink}
+        >
+          <span>
+            <img
+              className="rounded-3 calender-icon "
+              src={outlookImg}
+            />
+          </span>
+          Add to Outlook 365
+        </button>
+        <button
+          className="btn calender-btn search-btn btn m-2"
+          onClick={constructOutlookCalendarLink}
+        >
+          <span>
+            <img
+              className="rounded-3 calender-icon "
+              src={outlookImg}
+            />
+          </span>
+          Add to Outlook Live
         </button>
       </div>
       <Footer />
