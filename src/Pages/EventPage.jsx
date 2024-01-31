@@ -161,163 +161,35 @@ const EventPage = () => {
     return `${year}${month}${day}T${hours}${minutes}${seconds}`;
   };
 
-  // const generateICalLink = () => {
-  //   // Check if the 'events' object is defined and contains necessary properties
-  //   if (
-  //     !events ||
-  //     !events.event_startdate ||
-  //     !events.event_starttime ||
-  //     !events.event_enddate ||
-  //     !events.event_endtime ||
-  //     !events.event_title ||
-  //     !events.event_description
-  //   ) {
-  //     console.error("Error: 'events' object is missing properties.");
-  //     return;
-  //   }
-
-  //   // const startDate = new Date(
-  //   //   events.event_startdate + " " + events.event_starttime
-  //   // );
-  //   // const endDate = new Date(events.event_enddate + " " + events.event_endtime);
-
-  //   // const formattedStartDate = startDate
-  //   //   .toISOString()
-  //   //   .replace(/-|:|\.\d+/g, "")
-  //   //   .slice(0, -1); // Remove 'Z' from ISO string
-  //   // const formattedEndDate = endDate
-  //   //   .toISOString()
-  //   //   .replace(/-|:|\.\d+/g, "")
-  //   //   .slice(0, -1); // Remove 'Z' from ISO string
-
-  //   const startDate = new Date(
-  //     events.event_startdate + " " + events.event_starttime
-  //   );
-  //   const endDate = new Date(events.event_enddate + " " + events.event_endtime);
-
-  //   console.log(startDate, "**************");
-
-  //   const formattedStartDate = startDate
-  //     .toISOString()
-  //     .replace(/-|:|\.\d+/g, "")
-  //     .slice(0, -1);
-  //   const formattedEndDate = endDate
-  //     .toISOString()
-  //     .replace(/-|:|\.\d+/g, "")
-  //     .slice(0, -1);
-
-  //   // Replace '[your-calendar-url]' with the actual URL of your calendar
-  //   // const calendarUrl = "[your-calendar-url]";
-
-  //   // // Construct the webcal URL
-  //   // const webcalUrl = `webcal://${calendarUrl}?start=${formattedStartDate}&end=${formattedEndDate}&title=${encodeURIComponent(
-  //   //   events.event_title
-  //   // )}&description=${encodeURIComponent(events.event_description)}`;
-
-  //   const calendarUrl = `webcal://192.168.18.250:5173/calendar.ics`; // Replace 'example.com/calendar.ics' with your actual calendar URL
-
-  //   const eventParams = `?start=${formattedStartDate}&end=${formattedEndDate}&title=${encodeURIComponent(
-  //     events.event_title
-  //   )}&description=${encodeURIComponent(events.event_description)}`;
-
-  //   const webcalUrl = calendarUrl + eventParams;
-
-  //   console.log("Webcal URL:", webcalUrl); // Log the constructed URL
-
-  //   window.open(webcalUrl);
-  // };
-
-  // const generateICalLink = () => {
-  //   // Check if the 'events' object is defined and contains necessary properties
-  //   if (
-  //     !events ||
-  //     !events.event_startdate ||
-  //     !events.event_starttime ||
-  //     !events.event_enddate ||
-  //     !events.event_endtime ||
-  //     !events.event_title ||
-  //     !events.event_description
-  //   ) {
-  //     console.error("Error: 'events' object is missing properties.");
-  //     return;
-  //   }
-
-  //   // Splitting the time and checking if it's in AM or PM format
-  //   const startTimeParts = events.event_starttime.split(" ");
-  //   const isPM = startTimeParts[1].toLowerCase() === "pm";
-
-  //   // Splitting the time into hours, minutes, and seconds
-  //   const timeParts = startTimeParts[0].split(":");
-  //   let hours = parseInt(timeParts[0], 10);
-  //   const minutes = parseInt(timeParts[1], 10);
-  //   const seconds = parseInt(timeParts[2], 10);
-
-  //   // Adjusting hours if it's PM
-  //   if (isPM && hours !== 12) {
-  //     hours += 12;
-  //   } else if (!isPM && hours === 12) {
-  //     hours = 0;
-  //   }
-
-  //   // Constructing the start date and time
-  //   const startDate = new Date(
-  //     `${events.event_startdate}T${hours.toString().padStart(2, "0")}:${minutes
-  //       .toString()
-  //       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-  //   );
-  //   const endDate = new Date(
-  //     `${events.event_enddate}T${hours.toString().padStart(2, "0")}:${minutes
-  //       .toString()
-  //       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-  //   );
-
-  //   // Format dates in ISO string format without milliseconds
-  //   const formattedStartDate = startDate.toISOString().slice(0, -5);
-  //   const formattedEndDate = endDate.toISOString().slice(0, -5);
-
-  //   const calendarUrl = `webcal://192.168.18.250:5173/calendar.ics`;
-
-  //   const eventParams = `?start=${formattedStartDate}&end=${formattedEndDate}&title=${encodeURIComponent(
-  //     events.event_title
-  //   )}&description=${encodeURIComponent(events.event_description)}`;
-
-  //   const webcalUrl = calendarUrl + eventParams;
-
-  //   console.log("Webcal URL:", webcalUrl);
-
-  //   window.open(webcalUrl);
-  // };
-
-
   const generateICalLink = () => {
     // Splitting the time and checking if it's in AM or PM format
-       const startTimeParts = events.event_starttime.split(" ");
-       const isPM = startTimeParts[1].toLowerCase() === "pm";
-       // Splitting the time into hours, minutes, and seconds
-       const timeParts = startTimeParts[0].split(":");
-       let hours = parseInt(timeParts[0], 10);
-       const minutes = parseInt(timeParts[1], 10);
-       const seconds = parseInt(timeParts[2], 10);
-       // Adjusting hours if it's PM
-       if (isPM && hours !== 12) {
-         hours += 12;
-       } else if (!isPM && hours === 12) {
-         hours = 0;
-       }
-       // Constructing the start date and time
-       const startDate = new Date(
-         `${events.event_startdate}T${hours.toString().padStart(2, "0")}:${minutes
-           .toString()
-           .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-       );
-       const endDate = new Date(
-         `${events.event_enddate}T${hours.toString().padStart(2, "0")}:${minutes
-           .toString()
-           .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-       );
-       // Format dates in ISO string format without milliseconds
-       const formattedStartDate = startDate.toISOString().slice(0, -5);
-       const formattedEndDate = endDate.toISOString().slice(0, -5);
+    const startTimeParts = events.event_starttime.split(" ");
+    const isPM = startTimeParts[1].toLowerCase() === "pm";
+    // Splitting the time into hours, minutes, and seconds
+    const timeParts = startTimeParts[0].split(":");
+    let hours = parseInt(timeParts[0], 10);
+    const minutes = parseInt(timeParts[1], 10);
+    const seconds = parseInt(timeParts[2], 10);
+    // Adjusting hours if it's PM
+    if (isPM && hours !== 12) {
+      hours += 12;
+    } else if (!isPM && hours === 12) {
+      hours = 0;
+    }
+    // Constructing the start date and time
+    const startDate = new Date(
+      `${events.event_startdate}T${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+    );
+    const endDate = new Date(
+      `${events.event_enddate}T${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+    );
+    // Format dates in ISO string format without milliseconds
+    const formattedStartDate = startDate.toISOString().slice(0, -5);
+    const formattedEndDate = endDate.toISOString().slice(0, -5);
 
     // Create an iCalendar event string
     const iCalEvent = `BEGIN:VCALENDAR
@@ -338,9 +210,7 @@ END:VCALENDAR`;
 
     // Open the webcal URL to add the event to the calendar
     window.open(webcalURL);
-};
-
-
+  };
 
   const startDateFormatted = new Date(
     `${events.event_startdate} ${events.event_starttime}`
@@ -428,11 +298,9 @@ END:VCALENDAR`;
                   <iframe
                     width="100%"
                     height="600"
-                    frameborder="0"
-                    scrolling="no"
-                    marginheight="0"
-                    marginwidth="0"
-                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Bend,%20Oregon,%20USA+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                      events.event_city
+                    )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
                   >
                     <a href="https://www.maps.ie/population/">
                       Find Population on Map
