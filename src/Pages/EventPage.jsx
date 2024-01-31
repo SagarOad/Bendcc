@@ -232,31 +232,29 @@ END:VCALENDAR`;
   // console.log("Start Date (Google Calendar format):", formattedStartDate);
   // console.log("End Date (Google Calendar format):", formattedEndDate);
 
+
   return (
     <>
-      <Helmet>
-        <title>{events.event_title}</title>
-        <meta name="description" content={events.event_description} />
-        <meta property="og:title" content={events.event_title} />
-        <meta property="og:image" content={`${path}/${events?.event_image}`} />
-        {/* Add more meta tags as needed */}
-      </Helmet>
+      <Helmet>{/* Helmet meta tags... */}</Helmet>
       <Navbar2 />
-      <div className=" container event-main">
+      <div className="container event-main">
         <div className="row">
-          <h1 className="event-page-heading mb-5 ">{events.event_title}</h1>
-
-          <div className=" col-lg-4 ">
+          <div className="col-lg-12"></div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4">
             <img
-              className=" event-page-image"
+              className="event-page-image"
               src={`${path}/${events?.event_image}`}
+              alt={events.event_title}
             />
           </div>
-
           <div className="col-lg-8 ">
-            <div className="row">
-              <div className="col-lg-8 px-5 ">
-                <h2 className="event-description">Event Description</h2>
+            <div className="">
+              <div className=" px-5 ">
+                <h1 className="event-page-heading mb-3">
+                  {events.event_title}
+                </h1>
                 <p className="event-page-para">{events.event_description}</p>
                 <div className="event-page-details row">
                   <div className=" col-lg-4 ">
@@ -292,82 +290,99 @@ END:VCALENDAR`;
                   </div>
                 </div>
               </div>
-
-              <div className=" col-lg-4">
-                <div>
-                  <iframe
-                    width="100%"
-                    height="600"
-                    src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                      events.event_city
-                    )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
+            </div>
+            <div className="dropdown calender-dropdown-btn">
+              <button
+                className="btn dropdown-toggle calender-btn search-btn btn m-2"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Add to Calendar
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={constructGoogleCalendarLink}
                   >
-                    <a href="https://www.maps.ie/population/">
-                      Find Population on Map
-                    </a>
-                  </iframe>
-                </div>
-              </div>
+                    <span>
+                      <img
+                        className="rounded-3 calender-icon "
+                        src={googleCalender}
+                      />
+                    </span>
+                    Add to Google Calendar
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={constructOutlookCalendarLink}
+                  >
+                    <span>
+                      <img
+                        className="rounded-3 calender-icon "
+                        src={outlookImg}
+                      />
+                    </span>
+                    Outlook 360
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={constructOutlookLiveCalendarLink}
+                  >
+                    <span>
+                      <img
+                        className="rounded-3 calender-icon "
+                        src={outlookLive}
+                      />
+                    </span>
+                    Outlook Live
+                  </button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={generateICalLink}>
+                    <span>
+                      <img
+                        className="rounded-3 calender-icon "
+                        src={icalender}
+                      />
+                    </span>
+                    iCalender
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
+          
         </div>
-
-        <div className="dropdown">
-          <button
-            className="btn dropdown-toggle calender-btn search-btn btn m-2"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Add to Calendar
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={constructGoogleCalendarLink}
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="map-container">
+              <iframe
+                width="100%"
+                height="400"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                  events.event_city
+                )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`}
               >
-                <span>
-                  <img
-                    className="rounded-3 calender-icon "
-                    src={googleCalender}
-                  />
-                </span>
-                Add to Google Calendar
-              </button>
-            </li>
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={constructOutlookCalendarLink}
-              >
-                <span>
-                  <img className="rounded-3 calender-icon " src={outlookImg} />
-                </span>
-                Outlook 360
-              </button>
-            </li>
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={constructOutlookLiveCalendarLink}
-              >
-                <span>
-                  <img className="rounded-3 calender-icon " src={outlookLive} />
-                </span>
-                Outlook Live
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" onClick={generateICalLink}>
-                <span>
-                  <img className="rounded-3 calender-icon " src={icalender} />
-                </span>
-                iCalender
-              </button>
-            </li>
-          </ul>
+                <a href="https://www.maps.ie/population/">
+                  Find Population on Map
+                </a>
+              </iframe>
+            </div>
+          </div>
+          
+        </div>
+        <div className="row">
+        
         </div>
       </div>
       <Footer />

@@ -224,8 +224,8 @@ input#\:r1\: {
 }
 
 .event-grid-card {
-  width: 400px;
-  margin: 14px;
+  width: auto;
+  margin-bottom: 24px;
 }
 
 .event-timing {
@@ -258,6 +258,15 @@ input#\:r1\: {
   font-size: 14px;
   margin: 0px 0px 12px 0px;
 }
+
+p.event-para {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+
 .event-price {
   font-family: poppins;
   font-size: 14px;
@@ -271,9 +280,18 @@ input#\:r1\: {
 }
 .event-heading2 {
   font-family: poppins;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
+  height: 56px;
+  overflow: overlay;
 }
+
+/* h2.event-heading2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
 
 .event-img-container {
   display: flex;
@@ -737,13 +755,13 @@ button.btn.button-27.btn-primary:hover:after {
 }
 
 button#home-tab {
-    font-size: 22px;
+    font-size: 18px;
 }
 button#profile-tab {
-    font-size: 22px;
+    font-size: 18px;
 }
 button#month-tab {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 
@@ -774,3 +792,10 @@ button.btn.calender-btn.search-btn.btn.m-2 {
   font-size: 14px;
 } */
   
+
+
+.calender-dropdown-btn {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

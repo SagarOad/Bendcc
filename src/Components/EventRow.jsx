@@ -44,7 +44,7 @@ const EventRow = ({ event }) => {
             <CiLocationOn className=" fs-5" />
             1001 SW Emkay Dr, Bend, OR, United States
           </p>
-          <p className="event-para">{event.event_description}</p>
+          {/* <p className="event-para">{event.event_description}</p> */}
           <p className="event-price fw-bold">{event.event_cost}</p>
         </div>
       </div>

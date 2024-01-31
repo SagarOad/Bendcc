@@ -41,7 +41,7 @@ const EventCard = ({ event }) => {
               </p>
               <p className="event-location2">
                 <CiLocationOn className="fs-5" />
-                {event.event_city}, {event.event_description}
+                {event.event_city}
               </p>
             </div>
           </div>
