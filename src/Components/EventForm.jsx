@@ -77,7 +77,7 @@ const EventForm = () => {
 
   const [eventImage, setEventImage] = useState(null);
 
-  // console.log(eventImage, "event ki image");
+  console.log(eventImage, "event ki image");
 
   const handleAllDayEventChange = (e) => {
     setIsAllDayEvent(e.target.checked);
@@ -90,21 +90,6 @@ const EventForm = () => {
 
   const handleRecurringEventChange = () => {
     setIsRecurringEvent(!isRecurringEvent);
-  };
-
-  const [selectedCities, setSelectedCities] = useState([]);
-  const [newCity, setNewCity] = useState("");
-
-  const handleAddCity = () => {
-    if (newCity && !selectedCities.includes(newCity)) {
-      setSelectedCities([...selectedCities, newCity]);
-      setNewCity("");
-    }
-  };
-
-  const handleRemoveCity = (city) => {
-    const updatedCities = selectedCities.filter((c) => c !== city);
-    setSelectedCities(updatedCities);
   };
 
   // form data api integration
@@ -219,8 +204,10 @@ const EventForm = () => {
         event_tags: selectedEventTags,
         venue_detail: selectedVenueDetail,
         organizer_detail: selectedOrganizerDetail,
-        // event_image: eventImage,
+        event_image: eventImage,
       };
+
+      console.log("Form Data:", updatedFormData);
 
       // http://192.168.18.244:8888/submitevent
       // https://famebusinesssolutions.com/bendcc/submitevent
@@ -236,6 +223,7 @@ const EventForm = () => {
       setSubmitSuccess(true);
 
       // Reset form data if needed
+      if (response?.data) {
       setFormData({
         event_title: "",
         event_description: "",
@@ -252,7 +240,7 @@ const EventForm = () => {
         recurrence_every: "",
         recurrence_in: "",
         recurrence_end: "",
-        // event_image: "",
+        event_image: "",
         event_description: "",
         event_startdate: new Date(),
         event_enddate: new Date(),
@@ -260,6 +248,7 @@ const EventForm = () => {
         recurrence_enddate: new Date(),
         formData: [], // Not sure if you really want to reset this field, as it might cause issues in your code.
       });
+   }
       setTimeout(() => {
         // window.location.reload();
       }, 2000); // Reload after 2 seconds
@@ -269,24 +258,14 @@ const EventForm = () => {
     }
   };
 
+
+  console.log("imGW ====",eventImage)
   const handleChange = (e) => {
     if (e.target.type === "file") {
-      // const file = e.target.files[0];
-      // setEventImage(file)
-      // console.log(file);
-      // console.log("Selected file:", file);
-      // setFormData((prevData) => ({
-      //   ...prevData,
-      //   event_image: file,
-      // }));
-      // console.log(formData);
     } else {
       let value = e.target.value;
-
-      // If the field should be an integer, convert the value to an integer
       if (
         // e.target.name === "event_tags" ||
-        // e.target.name === "event_city" ||
         e.target.name === "event_type" ||
         // e.target.name === "event_status" ||
         // e.target.name === "venue_detail" ||
@@ -495,61 +474,20 @@ const EventForm = () => {
               <div className="col-md-6">
                 <div className="form-group">
                   <label htmlFor="event_city">Event City</label>
-                  {/* <select
+                  <select
                     id="event_city"
                     name="event_city"
                     value={formData.event_city}
                     className="form-control"
                     onChange={handleChange}
                   >
-                    {CityData.map((city, index) => (
-                      <option key={index} value={city}>
-                        {city}
+                    {CityData.map((city) => (
+                      <option key={city.value} value={city.value}>
+                        {city.label}
                       </option>
                     ))}
-                  </select> */}
-                  <Select
-                    defaultValue={CityData[0]} // Set default selected option
-                    name="city"
-                    options={CityData} // Provide options from CityData array
-                    className="basic-select"
-                    classNamePrefix="select"
-                    // onChange={this.handleSelectChange} // Handle change event
-                  />
+                  </select>
                 </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label>Selected Cities</label>
-                  <div>
-                    <ul className="list-group">
-                      {selectedCities.map((city) => (
-                        <li
-                          key={city}
-                          className="list-group-item d-flex justify-content-between align-items-center"
-                        >
-                          {city}
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-danger"
-                            onClick={() => handleRemoveCity(city)}
-                          >
-                            Remove
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleAddCity}
-                >
-                  Add City
-                </button>
               </div>
             </div>
 
@@ -856,8 +794,11 @@ const EventForm = () => {
                     id="event_image"
                     name="event_image"
                     className="form-control"
-                    // accept="image/*"
-                    onChange={(e) => setEventImage(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      console.log("Selected image:", file);
+                      setEventImage(file);
+                    }}
                   />
                   {/* <input
                     type="file"
