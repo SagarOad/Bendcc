@@ -171,6 +171,7 @@ const EventForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newData = new FormData();
 
     try {
       // Extract integer values from selected options
@@ -207,6 +208,60 @@ const EventForm = () => {
         event_image: eventImage,
       };
 
+      newData.append("event_title", formData.event_title);
+      newData.append("event_description", formData.event_description);
+      newData.append("event_status", formData.event_status);
+      newData.append("daydate", selectedDays);
+      newData.append("month_day", selectedMonthDays);
+      newData.append("targetmonth", selectedTargetMonthDays);
+      newData.append("event_categories", selectedEventCategories);
+      newData.append("event_tags", selectedEventTags);
+      newData.append("venue_detail", selectedVenueDetail);
+      newData.append("organizer_detail", selectedOrganizerDetail);
+      newData.append("event_Website", formData.event_Website);
+      newData.append("event_cost", formData.event_cost);
+      newData.append("event_startdate", formData.event_startdate);
+      newData.append("event_enddate", formData.event_enddate);
+      newData.append("recurrence_startdate", formData.recurrence_startdate);
+      newData.append("recurrence_enddate", formData.recurrence_enddate);
+      newData.append("event_city", formData.event_city);
+      newData.append("is_event_allday", formData.is_event_allday);
+      newData.append("event_type", formData.event_type);
+      newData.append("recurrence_event", formData.recurrence_event);
+      newData.append("recurrence_every", formData.recurrence_every);
+      newData.append("recurrence_in", formData.recurrence_in);
+      newData.append("recurrence_end", formData.recurrence_end);
+      newData.append("event_image", formData.event_image);
+
+      // const [formData, setFormData] = useState({
+      //   event_title: "",
+      //   event_description: "",
+      //   event_tags: 1,
+      //   event_status: "",
+      //   event_city: "",
+      //   venue_detail: 1,
+      //   organizer_detail: 1,
+      //   event_Website: "",
+      //   event_cost: "",
+      //   // event_date_time: new Date(),
+      //   is_event_allday: "",
+      //   recurrence_event: "",
+      //   // recurrence_type: "",
+      //   event_type: "",
+      //   recurrence_every: "",
+      //   recurrence_in: "",
+      //   recurrence_end: "",
+      //   event_image: eventImage,
+
+      //   event_startdate: new Date(),
+      //   event_enddate: new Date(),
+
+      //   recurrence_startdate: new Date(),
+      //   recurrence_enddate: new Date(),
+
+      //   formData: [],
+      // });
+
       console.log("Form Data:", updatedFormData);
 
       // http://192.168.18.244:8888/submitevent
@@ -214,7 +269,7 @@ const EventForm = () => {
       // Make a POST request to the API
       const response = await axios.post(
         "https://famebusinesssolutions.com/bendcc/submitevent",
-        updatedFormData
+        newData
       );
 
       // Handle successful response
@@ -223,7 +278,6 @@ const EventForm = () => {
       setSubmitSuccess(true);
 
       // Reset form data if needed
-      if (response?.data) {
       setFormData({
         event_title: "",
         event_description: "",
@@ -248,7 +302,6 @@ const EventForm = () => {
         recurrence_enddate: new Date(),
         formData: [], // Not sure if you really want to reset this field, as it might cause issues in your code.
       });
-   }
       setTimeout(() => {
         // window.location.reload();
       }, 2000); // Reload after 2 seconds
@@ -258,8 +311,6 @@ const EventForm = () => {
     }
   };
 
-
-  console.log("imGW ====",eventImage)
   const handleChange = (e) => {
     if (e.target.type === "file") {
     } else {
@@ -796,8 +847,12 @@ const EventForm = () => {
                     className="form-control"
                     onChange={(e) => {
                       const file = e.target.files[0];
-                      console.log("Selected image:", file);
+                      console.log("Selected Files:", file);
                       setEventImage(file);
+                      setFormData({
+                        ...formData,
+                        event_image: file,
+                      });
                     }}
                   />
                   {/* <input
