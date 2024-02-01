@@ -46,40 +46,13 @@ const EventPage = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setEvents(data.data);
-        setPath(data?.imagepath);
-
-        // Update meta tags dynamically based on loaded data
-        document.title = data.data.event_title;
-
-        const metaTags = [
-          { name: "description", content: data.data.event_description },
-          { property: "og:title", content: data.data.event_title },
-          { property: "og:description", content: data.data.event_description },
-          {
-            property: "og:image",
-            content: data?.imagepath + "/" + data.data.event_image,
-          },
-        ];
-
-        metaTags.forEach((tag) => {
-          const existingTag = document.querySelector(
-            `meta[${Object.keys(tag)[0]}="${tag[Object.keys(tag)[0]]}"]`
-          );
-          if (existingTag) {
-            existingTag.setAttribute("content", tag.content);
-          } else {
-            const metaElement = document.createElement("meta");
-            for (const [key, value] of Object.entries(tag)) {
-              metaElement.setAttribute(key, value);
-            }
-            document.head.appendChild(metaElement);
-          }
-        });
+        setEvents(data.data), setPath(data?.imagepath);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+
+  
   console.log(events);
 
   function formatDateToGoogleCalendarFormat(dateString) {
@@ -270,7 +243,6 @@ END:VCALENDAR`;
         <meta property="og:description" content={events.event_description} />
         <meta property="og:image" content={events.event_image} />
       </Helmet>
-
       <Navbar2 />
       <div className="container event-main">
         <div className="row">
